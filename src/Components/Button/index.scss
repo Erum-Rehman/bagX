@@ -1,0 +1,14 @@
+@import '../../../src//responsive.scss';
+
+.butn-field1 {
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: black!important;
+    border: 1px solid black!important;
+    font-weight: 700;
+    &:hover {
+        background-color: white!important;
+        color: black!important;
+    }
+}

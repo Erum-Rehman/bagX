@@ -1,0 +1,49 @@
+.program1 {
+    width: 550px;
+    height: 550px;
+}
+.msg-btn {
+    padding: 10px 20px;
+    font-size: 15px;
+    color: white;
+    background-color: #c81f67 ;
+    border: none;
+    font-weight: 600;
+    &:hover {
+        color: #c81f67 ;
+        background-color: white;
+        border: 1px solid #c81f67 ;
+      }
+    &:focus {
+        color: #c81f67;
+        background-color: white;
+        border: 1px solid #c81f67;
+    }
+}
+.program {
+    display: flex;
+    margin: 3% 6%;
+}
+.program_info {
+    width: 40%;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+    justify-content: center;
+
+    h6 {
+        color: gray;
+        font-weight: 600;
+    }
+    p {
+        color: gray;
+    }
+}
+.img_div {
+    margin: 2% 0%;
+}
+.program2, .program3, .program4 {
+    width: 1200px;
+}

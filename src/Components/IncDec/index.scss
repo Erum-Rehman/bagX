@@ -1,0 +1,14 @@
+@import '../../../src//responsive.scss';
+
+.add-remove-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 4px;
+    padding: 1px 0px;
+    border: 1px solid #e5e5e5;;
+
+}
+.add-remove-container button {
+    border: 0!important;
+}

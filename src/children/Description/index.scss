@@ -1,0 +1,19 @@
+@import '../../../src//responsive.scss';
+
+.description-para {
+    box-shadow: 4px 8px 30px rgba(141, 141, 141, 0.1);
+    margin-left: 45px;
+    width: -webkit-fill-available;
+    padding: 30px;
+    text-align: justify;
+    @include respond-to(mobile-small) {
+        margin-left: 0px;
+     }
+     @include respond-to(tablet-mini) {
+        margin-left: 0px;
+     }
+}
+.description-para p {
+    color: #848484;
+    line-height: 2rem;
+}

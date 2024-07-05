@@ -1,0 +1,88 @@
+@import '../../../src//responsive.scss';
+
+.footer {
+    border-top: 1px solid #e5e5e5;;
+
+    background-color: white;
+    width: 100%;
+    margin: 50px 0 0;
+    padding: 60px 45px;
+    display: flex;
+    color: black;
+    flex-direction: column;
+    @include respond-to(mobile-small) {
+        padding: 60px 24px;
+    }
+    p {
+        font-size: 13px;
+    }
+}
+.container-footer {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    @include respond-to(tablet-mini) {
+        flex-direction: column;
+    }
+}
+.footer-socialsite {
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    @include respond-to(tablet-mini) {
+        width: 100%;
+        margin-top: 40px;
+        text-align: start;
+    }
+}
+
+.footer-socialsite p {
+    font-size: 12px;
+    line-height: 30px;
+    margin: 25px 0;
+}
+
+.social-list {
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    font-size: 30px;
+    margin-left: 0!important;
+    padding-left: 0!important;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    @include respond-to(tablet-mini) {
+       justify-content: left;
+       padding-left: 0!important;
+    }
+}
+.social {
+    font-size: 30px;
+    cursor: pointer;
+    margin-right: 15px;
+    &:hover {
+        background-color: white;
+    }
+}
+.rules {
+    width: 16%;
+    display: flex;
+    text-align: justify;
+    flex-direction: column;
+    @include respond-to(tablet-mini) {
+        width: 100%;
+     }
+}
+.terms {
+    list-style-type: none;
+    line-height: 2rem;
+    font-size: 12px;
+    cursor: pointer;
+    padding-left: 0!important;
+}
+.copyright {
+    font-weight: 400;
+    text-align: center;
+    font-size: 16px;
+}
