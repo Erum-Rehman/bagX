@@ -10,3 +10,10 @@ const WholeSale = () => {
     )
 }
 export default WholeSale;
+
+        
+
+
+
+
+

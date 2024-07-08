@@ -10,6 +10,7 @@ import CustomerReviews from './pages/CustomerReviews';
 import Bags from './pages/Collection/Bags';
 import NewArrivals from './pages/Collection/NewArrivals';
 import { Route, Routes } from "react-router-dom";
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/bags" element={<Bags />}></Route>
         <Route path="/newArrivals" element={<NewArrivals />}></Route>
         <Route path="/productDetails" element={<ProductDetail />}></Route>
-
+        <Route path="/checkout" element={<Checkout />}></Route>
       </Routes>
       <ScreenFooter />
     </div>

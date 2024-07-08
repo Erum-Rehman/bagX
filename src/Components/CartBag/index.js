@@ -3,7 +3,6 @@ import './index.scss';
 import { TiTimes } from "react-icons/ti";
 import ButnField from './../Button';
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -89,7 +88,7 @@ export default function PersistentDrawerRight({ handleCartClose, open }) {
                         <div className='bag-btns'>
                             {/* <ButnField title="VIEW CART" onClick={() => navigate("/cart")} /> */}
                             <br />
-                            <ButnField title="CHECK OUT" />
+                            <ButnField onClick={() => navigate("/checkout")} title="CHECK OUT" />
                         </div>
                     </div>
                 </List>

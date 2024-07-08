@@ -1,0 +1,209 @@
+@import '../../../src/responsive.scss';
+
+.checkout-container {
+    display: flex;
+    margin: 80px auto;
+    width: 85%;
+    @include respond-to(tablet) {
+        width: 90%;
+    }
+    @include respond-to(tablet-mini) {
+        width: 90%;
+        flex-direction: column;
+    }
+}
+.checkout-left {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    @include respond-to(tablet-mini) {
+        width: 100%;
+    }
+}
+.billing-details {
+    // box-shadow: 4px 8px 30px rgba(143, 142, 142, 0.1);
+    padding: 0px 30px 0;
+    height: auto;
+    // margin-bottom: 30px;
+    text-align: left;
+}
+.billing-details h5, .shipping-details h5 {
+    font-weight: 700;
+}
+.checkout-right {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    @include respond-to(tablet-mini) {
+        width: 100%;
+    }
+}
+.order-summary {
+    margin-left: 30px;
+    text-align: left;
+    @include respond-to(tablet-mini) {
+        padding: 30px;
+        margin-left: 0px;
+        margin-top: 25px;
+    }
+}
+.order-side {
+    display: flex;
+    margin: 36px 0;
+    align-items: center;
+    @include respond-to(tablet-mini) {
+        margin: 30px 0;
+    }
+}
+.order-title {
+    color: #848484;
+    font-size: 16px;
+}
+.checkout-product {
+    display: flex;
+    align-items: center;
+    margin: 12px 0 0;
+}
+.checkout-inc {
+    width: 100%;
+    margin-right: 10px;
+}
+.cancel {
+    font-size: 45px;
+}
+.del-order {
+    border-radius: 50%;
+    color: #848484;
+    background-color: white;
+    box-shadow: 4px 8px 30px rgba(143, 142, 142, 0.1);
+    font-size: 3px;
+    padding: 5px;
+    width: 30px;
+    height: 27px;
+    cursor: pointer;
+    /* margin: 11px 10px 0 93px; */
+    position: absolute;
+    right: 10%;
+    @include respond-to(tablet) {
+        right: 7%;
+    }
+}
+.del-order:hover {
+    color: white;
+    background-color: #f96822;
+}
+.shipping-details {
+    box-shadow: 4px 8px 30px rgba(143, 142, 142, 0.1);
+    padding: 45px 30px 35px;
+    height: auto;
+}
+.subtotal {
+    border: 1px solid #eee;
+    padding: 30px 30px 20px;
+    margin: 0 0 30px 30px;
+    border-radius: 5px;
+    @include respond-to(tablet-mini) {
+        margin: 0 0 30px 0px;
+
+    }
+}
+.subtotal h6 {
+    font-size: 18px;
+    color: black;
+    margin-bottom: 20px;
+}
+.tax {
+    display: flex;
+    color: black;
+    font-weight: 500;
+    justify-content: space-between;
+}
+.tax-inc {
+    display: flex;
+    color: #848484;
+    font-weight: 500;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.payment-method label, .payment-method2 label{
+    font-weight: 600;
+    font-size: 17px;
+}
+.payment-method p, .payment-method2 p{
+    margin: 0 18px;
+    color: #848484;
+    line-height: 1.7;
+    font-size: 1rem;
+    padding-bottom: 20px;
+}
+.payment-method2 {
+    @include respond-to(tablet-mini) {
+        display: flex;
+    }
+}
+.payment-method2 input {
+    @include respond-to(tablet-mini) {
+        margin-top: 4px;
+    }
+}
+.order-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: black;
+    border: 1px solid black!important;
+    font-weight: 600;
+    margin-left: 30px;
+    width: 47%;
+    border-radius: 5px;
+    @include respond-to(mobile-small) {
+       margin-left: 0;
+    }
+}
+.order-btn:hover {
+    background-color: white;
+    color: black;
+}
+.order-btn:focus {
+    background-color: black!important;
+    border: none!important;
+    color: white!important;
+}
+.conditions {
+    color: black!important;
+    cursor: pointer;
+    margin-left: 25px;
+    font-size: 14px;
+}
+.profile-checkout {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+.contact-cell {
+    margin-bottom: 25px;
+    position: relative;
+}
+label {
+    display: inline-block;
+}
+.contact-field {
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+    line-height: 50px;
+    border: 1px solid #eee;
+    margin-top: 4px ;
+    border-radius: 5px;
+}
+.contact-msg {
+    width: 100%;
+    height: 70px;
+    padding: 0 20px;
+    line-height: 50px;
+    border: 1px solid #eee;
+    margin-top: 5px ;
+    border-radius: 5px;
+    &:hover {
+        border: 1px solid #eee!important;
+    }
+}

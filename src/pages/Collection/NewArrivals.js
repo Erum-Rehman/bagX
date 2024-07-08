@@ -9,6 +9,9 @@ const NewArrivals = () => {
         <>
             <SummerSale/>
         </>
-    )
+    )                                                                                                     
 }
-export default NewArrivals;
+export default NewArrivals;                 
+                                                               
+                         
+                                                     

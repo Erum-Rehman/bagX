@@ -55,31 +55,6 @@ const Review = () => {
                         <span>Reply</span>
                     </div>
                 </div>
-                <div className="review-form">
-                    <h4>Leave A Comment </h4>
-                    <p>Your email address will not be published. Required fields are marked *</p>
-                    <div className="contact-cell">
-                        <label>Your Name</label><br />
-                        <input type="text" placeholder="enter your name" className="contact-field" />
-                    </div>
-                    <div className="contact-cell">
-                        <label>Your Email</label><br />
-                        <input type="email" placeholder="enter your email" className="contact-field" />
-                    </div>
-                    <div className="contact-cell">
-                        <textarea className="contact-msg" rows="3"></textarea>
-                    </div>
-                    <p className="rating">Your Rating</p>
-                    <div className="rating-div">
-                        <Rating />
-                    </div>
-
-                    <Button id="button-addon2" className='msg-btn'>
-                        Post Comment
-                    </Button>
-                </div>
-
-
             </div>
 
         </>
