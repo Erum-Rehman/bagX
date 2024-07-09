@@ -1,17 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import './index.scss'
-import products from '../../mock/product';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Rating from '../../Components/Rating';
 import SelectLabels from '../../Components/Dropdown';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useLocation } from "react-router-dom";
+import { listProducts } from '../../store/actions/productAction';
+import Product from '../../Components/Product';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SummerSale = () => {
-    // const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
- 
+    const productList = useSelector((state) => state.productList);
+    const { products } = productList;
+
+    useEffect(() => {
+        dispatch(listProducts());
+    }, [dispatch]);
+    
     return (
         <>
             {location.pathname === "/" ? <p className="prd_heading">SUMMER SALE</p>
@@ -37,19 +44,9 @@ const SummerSale = () => {
             </div>
             <div className="body">
                 <div className="product-container">
-                    {
-                        products.map((item) => (
-                            <div className="products" key={item.id} >
-                                <div className='tag'>Sale</div>
-                                {<div className="product-img">
-                                    <img src={`${window.location.origin}/${item.image}`} />
-                                </div>}
-                                <p className="product-title">{item.p_name}</p>
-                                <div className='product-rating'> <Rating /></div>
-                                <span className="price"><s>Rs.{item.oldPrice}</s></span>
-                                &ensp;<span className="price">Rs.{item.discountPrice}</span>
-                            </div>))
-                    }
+                    {products.map((product) => (
+                        <Product key={product._id} product={product} />
+                    ))}
                 </div>
             </div>
             <Stack spacing={2} className="pagination-body">

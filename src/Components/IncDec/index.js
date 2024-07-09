@@ -3,7 +3,6 @@ import { IoIosAdd, IoIosRemove } from 'react-icons/io';
 import React, { useState } from 'react'
 
 const IncDec = (props) => {
-    
     return (
         <>
             <div className='add-remove-container'>

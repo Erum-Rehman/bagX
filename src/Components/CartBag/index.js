@@ -21,19 +21,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
 }));
 
 export default function PersistentDrawerRight({ handleCartClose, open }) {
     const theme = useTheme();
-    const location = useLocation();
     const navigate = useNavigate();
 
     return (
         <Box sx={{ display: 'flex' }}>
-
             <Drawer
                 sx={{
                     width: 365,
@@ -86,14 +83,11 @@ export default function PersistentDrawerRight({ handleCartClose, open }) {
                         <p className='bag-total'>SUBTOTAL: <span>Rs, 4,500.00</span></p>
                         <p  style={{fontSize: '11px'}}>Shipping, taxes, and discount codes calculated at checkout.</p>
                         <div className='bag-btns'>
-                            {/* <ButnField title="VIEW CART" onClick={() => navigate("/cart")} /> */}
                             <br />
                             <ButnField onClick={() => navigate("/checkout")} title="CHECK OUT" />
                         </div>
                     </div>
                 </List>
-
-                <Divider />
             </Drawer>
         </Box>
     );

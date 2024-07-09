@@ -1,17 +1,28 @@
-import React, { useState } from "react";
 import './index.scss';
-import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Description from "../../children/Description";
 import Review from "../../children/Review";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Rating from "../../Components/Rating";
 import ButnField from "../../Components/Button";
+import { listProductDetails } from '../../store/actions/productAction';
+import { addToCart } from '../../store/actions/cartActions';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ProductDetails = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
+const ProductDetails = ({ match }) => {
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const productDetails = useSelector((state) => state.productDetails);
+    const { loading, error, product } = productDetails;
 
+    useEffect(() => {
+        dispatch(listProductDetails(id));
+    }, [dispatch, id]);
+
+    const handleAddToCart = () => {
+        dispatch(addToCart(product)); // Dispatch addToCart action with product details
+        console.log(dispatch(addToCart(product)), 'added')
+    };
     return (
         <>
             <div className="imgs-detail">
@@ -28,11 +39,11 @@ const ProductDetails = () => {
                         </button>
                     </div>
                     <div className="product-imgs">
-                        <img src={require("../../assets/whole_sale.png")} />
+                        <img src={product.image} alt={product.name} />
                     </div>
                 </div>
                 <div className="product-description">
-                    <h3>name</h3>
+                    <h3>{product.name}</h3>
                     <div className="review_div">
                         <div className="review-rating">
                             <br />
@@ -44,11 +55,11 @@ const ProductDetails = () => {
                             <span style={{ fontSize: '27px', fontWeight: '500' }}>28</span>
                         </div>
                     </div>
-                    <span style={{ fontSize: '18px' }}><s>Rs,4,500.00</s></span>
-                    &ensp;<span style={{ fontSize: '18px' }}>Rs,4,000.00</span>
+                    <span style={{ fontSize: '18px' }}><s>Rs,{product.old_price}</s></span>
+                    &ensp;<span style={{ fontSize: '18px' }}>Rs,{product.new_price}</span>
                     <p style={{ fontSize: '11px' }}>Shipping calculated at checkout</p>
                     <div className="details-btn">
-                        <ButnField title="ADD TO CART" className="cart_btn" />
+                        <ButnField title="ADD TO CART" onClick={handleAddToCart} className="cart_btn" />
                     </div>
                     <p>PRODUCT DETAILS</p>
                     <ul className="product-info">

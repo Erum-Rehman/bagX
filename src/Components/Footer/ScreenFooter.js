@@ -66,7 +66,6 @@ const ScreenFooter = () => {
                 <p className='copyright' >   
                     2024 Bag.x.official all rights reserved</p>   
             </div>
-
         </>
     )
 }

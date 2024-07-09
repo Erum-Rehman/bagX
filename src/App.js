@@ -24,10 +24,10 @@ function App() {
         <Route path="/customerReviews" element={<CustomerReviews />}></Route>
         <Route path="/bags" element={<Bags />}></Route>
         <Route path="/newArrivals" element={<NewArrivals />}></Route>
-        <Route path="/productDetails" element={<ProductDetail />}></Route>
+        <Route path='/product/:id' element={<ProductDetail />}></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
       </Routes>
-      <ScreenFooter />
+      <ScreenFooter /> 
     </div>
   ); 
 }

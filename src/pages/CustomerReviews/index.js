@@ -3,7 +3,6 @@ import './index.scss'
 import reviews from '../../mock/review';
 
 const CustomerReviews = () => {
-
     return (
         <>
         <div className="body">

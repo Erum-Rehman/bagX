@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './index.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { TiTimes } from "react-icons/ti";
 import { Formik } from "formik";
 
 const Checkout = () => {
@@ -11,19 +10,6 @@ const Checkout = () => {
     const handleCheck = () => {
         setChecked(!checked)
     }
-
-    // const onChecked = (setFieldValue) => {
-    //     if (!checked) {
-    //         setFieldValue('name', name)
-    //         setFieldValue('city', city)
-    //         setFieldValue('country', country)
-    //         setFieldValue('password', password)
-    //         setFieldValue('contact', contact)
-    //         setFieldValue('email', email)
-    //         setFieldValue('address', address);
-    //     }
-    //     setChecked(!checked)
-    // }
 
     return (
         <>
@@ -39,8 +25,6 @@ const Checkout = () => {
                     email: "",
                     msg: "",
                 }}
-            // validationSchema={ProfileSchema}
-            // onSubmit={values}
             >
                 {({ errors, handleChange, handleSubmit, setFieldValue, touched }) =>
                     <>
@@ -49,7 +33,6 @@ const Checkout = () => {
                                 <div className="billing-details">
                                     <div className="profile-checkout">
                                         <input type="checkbox" style={{ marginRight: '15px' }}
-                                        // onChange={() => onChecked(setFieldValue)} 
                                         />
                                         <label style={{ color: "#505050", fontSize: '17px', fontWeight: '600' }}>
                                             Continue with the Profile Data</label>
@@ -61,7 +44,6 @@ const Checkout = () => {
                                             disabled
                                             name="name"
                                             placeholder="Your Full name"
-                                            // value={values.name}
                                             className="contact-field"
                                             onChange={handleChange} />
                                     </div>
@@ -70,7 +52,6 @@ const Checkout = () => {
                                         <select className="contact-field"
                                             name="country"
                                             disabled
-                                            // value={values.country}
                                             onChange={handleChange}>
                                             <option className="dropdown">Country </option>
                                             <option value="Pakistan" >Pakistan </option>
@@ -100,7 +81,6 @@ const Checkout = () => {
                                     </div>
                                     <div className="contact-cell">
                                         <select className="contact-field"
-                                            // value={values.city}
                                             disabled
                                             name="city"
                                             onChange={handleChange}
@@ -151,23 +131,6 @@ const Checkout = () => {
                             <div className="checkout-right">
                                 <div className="order-summary">
                                     <h5 className="profile" style={{ marginBotton: '5px' }}>Order Summary</h5>
-                                    {/* {products.map((item, index) => (
-                                        <div className="order-side">
-                                            <div className="order-pic">
-                                                <img src={item.image} className="cart-image" />
-                                            </div>
-                                            <div className="sale-content">
-                                                <p className="order-title">{item.p_name}</p>
-                                                <div className="checkout-product">
-                                                   
-                                                    <TiTimes className="cancel" />
-                                                    <span className="new-price">${item.discountPrice}/kg</span>
-                                                </div>
-
-                                            </div>
-                                            <TiTimes className="del-order" onClick={() => removeItem(item.id)} />
-                                        </div>
-                                    ))} */}
                                 </div>
                                 <div className="subtotal">
                                     <div className="tax">

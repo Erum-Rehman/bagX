@@ -21,10 +21,8 @@
     }
 }
 .billing-details {
-    // box-shadow: 4px 8px 30px rgba(143, 142, 142, 0.1);
     padding: 0px 30px 0;
     height: auto;
-    // margin-bottom: 30px;
     text-align: left;
 }
 .billing-details h5, .shipping-details h5 {
@@ -81,7 +79,6 @@
     width: 30px;
     height: 27px;
     cursor: pointer;
-    /* margin: 11px 10px 0 93px; */
     position: absolute;
     right: 10%;
     @include respond-to(tablet) {

@@ -8,7 +8,6 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 export default function InputText() {
     const [showPassword, setShowPassword] = React.useState(false);
-
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     return (
@@ -23,7 +22,6 @@ export default function InputText() {
                                 <IconButton
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
-                                    // onMouseDown={handleMouseDownPassword}
                                 >
                                     <MailOutlineIcon/>
                                 </IconButton>

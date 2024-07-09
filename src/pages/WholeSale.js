@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import react from 'react'
 
 const WholeSale = () => {
-
     return (
         <>
             <p className="prd_heading">WHOLE SALE</p>

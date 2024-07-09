@@ -8,9 +8,7 @@ import SlideshowBar from '../SlideshowBar/slideshowBar';
 import PersistentDrawerRight from '../CartBag';
 
 const Header = () => {
-
   const [iscartBag, setIsCartBag] = useState(false);
-
   const handleCartClose = () => {
     setIsCartBag(!iscartBag);
   };
