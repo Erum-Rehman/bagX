@@ -9,12 +9,11 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { useLocation, Link } from "react-router-dom";
 import products from '../../mock/product';
 import IncDec from '../IncDec';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useSelector, useDispatch } from 'react-redux';
 const drawerWidth = 180;
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -28,6 +27,25 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerRight({ handleCartClose, open }) {
     const theme = useTheme();
     const navigate = useNavigate();
+    const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    if (!cart.items || !Array.isArray(cart.items)) {
+        return ;
+      }
+    const calculateSubtotal = () => {
+        if (!cart.items || cart.items.length === 0) {
+            return 0; // Return 0 if cart is empty
+        }
+       
+        let subtotal = 0;
+        cart.items.forEach(item => {
+            if (item.new_price && item.count) {
+                subtotal += item.new_price * item.count;
+            }
+        });
+    
+        return subtotal;
+    };
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -54,35 +72,37 @@ export default function PersistentDrawerRight({ handleCartClose, open }) {
                 <List>
                     <div className='shopping-bag-body'>
                         {
-                            products.map((item, index) => (
-                                <div key={item} className='bag-items'>
-                                    <img src={`${window.location.origin}/${item.image}`} className="bag-image" />
+                            cart.items.map((item) => (
+                                <div key={item.id} className='bag-items'>
+                                    <img src={item.image} alt={item.name} className="bag-image" />
                                     <div className='item-name'>
-                                        <h5 className="product-title">{item.p_name}</h5>
+                                        <h5 className="product-title">{item.name}</h5>
                                         <div className='item-price'>
                                             <div className='bag-item-count'>
-                                                <IncDec 
-                                                onClickAdd={() => navigate("/cart")}
+                                                <IncDec
+                                                    onClickAdd={() => navigate("/cart")}
                                                     onClickRemove={() => navigate()}
-                                                    count={item.count} 
-                                                    />
+                                                    count={item.count}
+                                                />
                                             </div>
-                                            <span className="new-price">{item.discountPrice}</span>
+                                            <span className="new-price">Rs,{item.new_price}</span>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             ))
                         }
-                        <p style={{textAlign: 'left', fontSize: '12px'}}>ORDER NOTE</p>
+                        <p style={{ textAlign: 'left', fontSize: '12px' }}>ORDER NOTE</p>
                         <div className="contact-cell">
-                        <textarea
-                            name="message"
-                            className="contact-msg" rows="3"
-                        ></textarea>
-                    </div>
-                        <p className='bag-total'>SUBTOTAL: <span>Rs, 4,500.00</span></p>
-                        <p  style={{fontSize: '11px'}}>Shipping, taxes, and discount codes calculated at checkout.</p>
+                            <textarea
+                                name="message"
+                                className="contact-msg" rows="3"
+                            ></textarea>
+                        </div>
+                        <p className='bag-total'>SUBTOTAL: <span>Rs, {calculateSubtotal().toFixed(2)}</span></p>
+                        <p style={{ fontSize: '11px' }}>Shipping, taxes, and discount codes calculated at checkout.</p>
                         <div className='bag-btns'>
+                            <br />
+                            <ButnField onClick={() => navigate("/cart")} title="CART" />
                             <br />
                             <ButnField onClick={() => navigate("/checkout")} title="CHECK OUT" />
                         </div>

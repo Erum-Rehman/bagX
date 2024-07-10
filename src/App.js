@@ -1,4 +1,7 @@
 import './App.css';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+// import { loadCartFromLocalStorage } from './store/actions/cartActions';
 import Header from './Components/Header';
 import ScreenFooter from './Components/Footer/ScreenFooter';
 import SummerSale from './pages/Collection/SummerSale';
@@ -11,7 +14,7 @@ import Bags from './pages/Collection/Bags';
 import NewArrivals from './pages/Collection/NewArrivals';
 import { Route, Routes } from "react-router-dom";
 import Checkout from './pages/Checkout';
-
+import Cart from './Components/Cart';
 function App() {
   return (
     <div className="App"> 
@@ -26,6 +29,7 @@ function App() {
         <Route path="/newArrivals" element={<NewArrivals />}></Route>
         <Route path='/product/:id' element={<ProductDetail />}></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
+        <Route path="/cart" element={<Cart />}></Route>
       </Routes>
       <ScreenFooter /> 
     </div>

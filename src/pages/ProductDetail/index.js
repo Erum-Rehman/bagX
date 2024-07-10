@@ -1,41 +1,45 @@
 import './index.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Review from "../../children/Review";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Rating from "../../Components/Rating";
 import ButnField from "../../Components/Button";
 import { listProductDetails } from '../../store/actions/productAction';
 import { addToCart } from '../../store/actions/cartActions';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const ProductDetails = ({ match }) => {
-    const dispatch = useDispatch();
+const ProductDetails = () => {
     const { id } = useParams();
+    const dispatch = useDispatch();
     const productDetails = useSelector((state) => state.productDetails);
-    const { loading, error, product } = productDetails;
+    const { product } = productDetails;
+    const navigate = useNavigate();
+
+    const [qty, setQty] = useState(1);
 
     useEffect(() => {
         dispatch(listProductDetails(id));
     }, [dispatch, id]);
 
-    const handleAddToCart = () => {
-        dispatch(addToCart(product)); // Dispatch addToCart action with product details
-        console.log(dispatch(addToCart(product)), 'added')
+    const addToCartHandler = () => {
+        dispatch(addToCart(product._id, qty));
+        navigate("/cart")
     };
+
     return (
         <>
             <div className="imgs-detail">
                 <div className="product-bar">
                     <div className="side-imgs">
-                        <button >
-                            <img src={require("../../assets/whole_sale.png")} />
+                        <button>
+                            <img src={require("../../assets/whole_sale.png")} alt="product" />
                         </button>
                         <button>
-                            <img src={require("../../assets/whole_sale.png")} />
+                            <img src={require("../../assets/whole_sale.png")} alt="product" />
                         </button>
                         <button>
-                            <img src={require("../../assets/whole_sale.png")} />
+                            <img src={require("../../assets/whole_sale.png")} alt="product" />
                         </button>
                     </div>
                     <div className="product-imgs">
@@ -59,7 +63,7 @@ const ProductDetails = ({ match }) => {
                     &ensp;<span style={{ fontSize: '18px' }}>Rs,{product.new_price}</span>
                     <p style={{ fontSize: '11px' }}>Shipping calculated at checkout</p>
                     <div className="details-btn">
-                        <ButnField title="ADD TO CART" onClick={handleAddToCart} className="cart_btn" />
+                        <ButnField title="ADD TO CART" onClick={addToCartHandler} className="cart_btn" />
                     </div>
                     <p>PRODUCT DETAILS</p>
                     <ul className="product-info">
@@ -89,6 +93,7 @@ const ProductDetails = ({ match }) => {
                 </div>
             </div>
         </>
-    )
-}
-export default ProductDetails
+    );
+};
+
+export default ProductDetails;

@@ -1,26 +1,19 @@
-// src/reducers/cartReducers.js
-import { ADD_TO_CART } from '../actions/cartActions';
+const initialState = {
+  items: [],
+};
 
-const cartReducer = (state = { cartItems: [] }, action) => {
+const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TO_CART:
-      const newItem = action.payload;
-      const existingItem = state.cartItems.find(item => item.id === newItem.id);
-      if (existingItem) {
-        // Item already in cart, update quantity or any other logic
-        return {
-          ...state,
-          cartItems: state.cartItems.map(item =>
-            item.id === existingItem.id ? { ...item, quantity: item.quantity + newItem.quantity } : item
-          )
-        };
-      } else {
-        // New item added to cart
-        return {
-          ...state,
-          cartItems: [...state.cartItems, newItem]
-        };
-      }
+    case 'ADD_TO_CART':
+      return {
+        ...state,
+        items: [...state.items, action.payload],
+      };
+    case 'REMOVE_FROM_CART':
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.payload),
+      };
     default:
       return state;
   }

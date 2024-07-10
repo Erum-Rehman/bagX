@@ -2,8 +2,43 @@ import React, { useState } from "react";
 import './index.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from "formik";
+import { useSelector, useDispatch } from 'react-redux';
+// import { clearCart } from '../../store/actions/cartActions';
 
 const Checkout = () => {
+    const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    const [userDetails, setUserDetails] = useState({
+        email: '',
+        name: '',
+        country: '',
+        address: '',
+        city: '',
+        phone: '',
+        postalCode: '',
+    });
+
+    const handleChange = (e) => {
+        setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const order = {
+            items: cart.items,
+            userDetails,
+        };
+        // Send order to the backend
+        await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(order),
+        });
+        // dispatch(clearCart());
+        // alert('Order placed successfully!');
+    };
 
     const [checked, setChecked] = useState(false)
 
@@ -26,107 +61,74 @@ const Checkout = () => {
                     msg: "",
                 }}
             >
-                {({ errors, handleChange, handleSubmit, setFieldValue, touched }) =>
+                {({ errors, handleSubmit, setFieldValue, touched }) =>
                     <>
                         <form className="checkout-container" onSubmit={handleSubmit}>
                             <div className="checkout-left">
                                 <div className="billing-details">
-                                    <div className="profile-checkout">
-                                        <input type="checkbox" style={{ marginRight: '15px' }}
-                                        />
-                                        <label style={{ color: "#505050", fontSize: '17px', fontWeight: '600' }}>
-                                            Continue with the Profile Data</label>
-                                    </div>
                                     <h5 className="profile" style={{ marginBotton: '5px' }}>Billing Details</h5>
                                     <div className="contact-cell">
-                                        <label>Full Name </label><br />
                                         <input type="text"
-                                            disabled
+                                            value={userDetails.name} 
+                                            onChange={handleChange} required
                                             name="name"
-                                            placeholder="Your Full name"
+                                            placeholder="Full name"
                                             className="contact-field"
-                                            onChange={handleChange} />
+                                        />
                                     </div>
                                     <div className="contact-cell">
                                         <label>Country / Region</label><br />
                                         <select className="contact-field"
                                             name="country"
-                                            disabled
                                             onChange={handleChange}>
                                             <option className="dropdown">Country </option>
                                             <option value="Pakistan" >Pakistan </option>
                                             <option value="India" >India </option>
-                                            <option value="America">America</option>
-                                            <option value="London">London</option>
                                         </select>
                                     </div>
                                     <div className="contact-cell">
-                                        <label>Street Address</label><br />
-                                        <input type="text"
-                                            name="street"
-                                            placeholder="House and street name"
-                                            // value={values.street}
-                                            className="contact-field"
-                                            onChange={handleChange} />
-                                    </div>
-                                    <div className="contact-cell">
-                                        <label>Address </label><br />
                                         <input
                                             type="text" name="address"
-                                            disabled
-                                            placeholder="enter your address"
-                                            // value={values.address}
+                                            placeholder="Address"
+                                            value={userDetails.address}
+                                            className="contact-field"
+                                            onChange={handleChange} required/>
+                                    </div>
+                                    <div className="contact-cell">
+                                        <input
+                                            type="text" name="city"
+                                            placeholder="City"
+                                            value={userDetails.city}
                                             className="contact-field"
                                             onChange={handleChange} />
                                     </div>
                                     <div className="contact-cell">
-                                        <select className="contact-field"
-                                            disabled
-                                            name="city"
-                                            onChange={handleChange}
-                                        >
-                                            <option className="dropdown">Town/City </option>
-                                            <option value="Karachi" >Karachi </option>
-                                            <option value="Lahore">Lahore</option>
-                                            <option value="Islamabad">Islamabad</option>
-
-                                        </select>
-                                    </div>
-                                    <div className="contact-cell">
-                                        <input type="Number" name="code"
+                                        <input
                                             placeholder="Post Code"
-                                            // value={values.code}
                                             className="contact-field"
-                                            onChange={handleChange} />
+                                            type="text" name="postalCode"
+                                            value={userDetails.postalCode}
+                                            onChange={handleChange} required />
                                     </div>
                                     <div className="contact-cell">
                                         <label>Additional Information </label><br />
-                                        <input type="number" name="contact"
-                                            disabled
+                                        <input type="number" name="phone"
                                             placeholder="Your Phone Number"
-                                            // value={values.contact}
+                                            value={userDetails.phone}
                                             className="contact-field"
                                             onChange={handleChange} />
                                     </div>
                                     <div className="contact-cell">
                                         <input type="email" name="email"
-                                            disabled
+                                            value={userDetails.email} 
+                                            onChange={handleChange} required
                                             placeholder="Your Email Address"
                                             className="contact-field"
-                                            // value={values.email}
-                                            onChange={handleChange} />
+                                        />
                                     </div>
-                                    <div className="contact-cell">
-                                        <textarea
-                                            className="contact-msg"
-                                            rows="6"
-                                            // value={values.msg}
-                                            onChange={handleChange}
-                                            name="msg"
-                                            placeholder="Order Notes (optional)"></textarea>
-                                    </div>
+
                                 </div>
-                               
+
                             </div>
                             <div className="checkout-right">
                                 <div className="order-summary">
@@ -168,6 +170,7 @@ const Checkout = () => {
                                     </div>
                                     <a className="conditions">Terms and Conditions</a>
                                 </div>
+                                <br/>
                                 <button className="order-btn" type="submit">Complete Order</button>
                             </div>
                         </form>
