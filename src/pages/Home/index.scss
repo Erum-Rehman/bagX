@@ -1,0 +1,102 @@
+@import '../../../src//responsive.scss';
+
+.body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* bg */
+.img{
+    /* position: absolute; */
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    display: flex;
+    flex-direction: column;
+    background-image: url(../../assets/bg.png);
+    background-position: center;
+    background-size: cover;
+  }
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 45px;
+    border-bottom: 1px solid #eee;
+  }
+  .category {
+    margin: 10px 30px;
+    text-align: center;
+  
+    img {
+      width: 150px;
+    }
+  }
+  .container-img {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+  }
+.product_container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 85%;
+    margin-top: 35px;
+}
+.banner {
+  display: flex;
+  margin: 5% 1%;
+  justify-content: center;
+  img {
+    width: 47%;
+    padding: 0 15px;
+  }
+}
+.rating_div {
+  display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5%;
+    padding: 0 15%;
+    background-color: #fbfbfb;
+  // box-shadow: 4px 8px 30px rgba(141, 141, 141, 0.1);
+  img {
+    width: 20%;
+  }
+}
+.rating-butn {
+  padding: 4px;
+    font-size: 14px;
+    color: black;
+    background-color: #fbfbfb;
+    border: 1px solid #00000059!important;
+    margin-left: 30px;
+    width: 26%;
+    border-radius: 5px;
+    @include respond-to(mobile-small) {
+       margin-left: 0;
+    }
+}
+.services {
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 25%;
+    height: auto;
+    text-align: center;
+    margin: 10px 8px;
+    padding: 27px 20px;
+    box-shadow: 4px 8px 30px rgba(141, 141, 141, 0.1);
+    @include respond-to(mobile-small) {
+        width: 95%!important;
+    }
+    @include respond-to(tablet-mini) {
+        width: 47%;
+    }
+}
+.services-title {
+    font-size: 18px;
+    /* font-weight: 600; */
+    padding-bottom: 3px;
+}

@@ -34,9 +34,9 @@ const Header = () => {
             <img src={require("../../assets/logo_shop.avif")} alt="Logo" className='logo' />
           </div>
           <ul className="nav-items">
-            <li><Link to="/">SUMMER SALE</Link></li>
+            <li><Link to="/summerSale">SUMMER SALE</Link></li>
             <li><Link to="/bags">ALL BAGS</Link></li>
-            <li><Link to="/newArrivals">NEW ARRIVALS</Link></li>
+            {/* <li><Link to="/newArrivals">NEW ARRIVALS</Link></li> */}
             <li><Link to="/customerReviews">CUSTOMER REVIEWS</Link></li>
             <li><Link to="/affiliateProgramme">AFFILIATE PROGRAMME</Link></li>
             <li><Link to="/wholeSale">WHOLE SALE</Link></li>

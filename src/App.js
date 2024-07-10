@@ -15,12 +15,15 @@ import NewArrivals from './pages/Collection/NewArrivals';
 import { Route, Routes } from "react-router-dom";
 import Checkout from './pages/Checkout';
 import Cart from './Components/Cart';
+import Home from './pages/Home/Home';
+
 function App() {
   return (
     <div className="App"> 
       <Header />
       <Routes>
-        <Route path="/" element={<SummerSale />}></Route>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/summerSale" element={<SummerSale />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/wholeSale" element={<WholeSale />}></Route>
         <Route path="/affiliateProgramme" element={<AffiliateProgram />}></Route>
