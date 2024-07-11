@@ -23,9 +23,18 @@ const ProductDetails = () => {
     }, [dispatch, id]);
 
     const addToCartHandler = () => {
-        dispatch(addToCart(product._id, qty));
+        if(qty >= product.quantity) {
+            alert("No items left");
+        } else {
+            dispatch(addToCart(product._id, qty));
+            navigate("/cart");
+        }
+        // dispatch(addToCart(product._id, qty));
+
         navigate("/cart")
+        window.location.reload();
     };
+    console.log(product.quantity, 'products')
 
     return (
         <>
@@ -62,6 +71,7 @@ const ProductDetails = () => {
                     <span style={{ fontSize: '18px' }}><s>Rs,{product.old_price}</s></span>
                     &ensp;<span style={{ fontSize: '18px' }}>Rs,{product.new_price}</span>
                     <p style={{ fontSize: '11px' }}>Shipping calculated at checkout</p>
+                    <p style={{ fontSize: '14px' }}>Available In Stock:  {product.quantity}</p>
                     <div className="details-btn">
                         <ButnField title="ADD TO CART" onClick={addToCartHandler} className="cart_btn" />
                     </div>

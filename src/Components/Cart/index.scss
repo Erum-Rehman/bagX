@@ -10,9 +10,18 @@
     border-bottom: 1px solid #e5e5e5;
     padding-bottom: 25px;
 }
+.cart-left {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 60px;
+    @include respond-to(tablet-mini) {
+        width: 100%;
+    }
+}
 .cart-container {
     display: flex;
-    margin: 50px auto;
+    margin: 25px auto;
     width: 85%;
     @include respond-to(tablet) {
         width: 90%;
@@ -20,5 +29,13 @@
     @include respond-to(tablet-mini) {
         width: 90%;
         flex-direction: column;
+    }
+}
+.remove {
+    cursor: pointer;
+    margin-top: 5%;
+    font-size: 12px;
+    &:hover {
+        color: #e5e5e5;
     }
 }

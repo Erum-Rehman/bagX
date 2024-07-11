@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import './index.scss'
 import Product from '../../Components/Product';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { listProducts } from '../../store/actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import categories from "../../mock/categories";
@@ -29,7 +29,9 @@ const Home = () => {
                     categories.map((item) => (
                         <div key={item.id} className="category">
                             {<div >
+                                <Link to='/summerSale'>
                                 <img src={`${window.location.origin}/${item.image}`} />
+                                </Link>
                             </div>}
                         </div>
                     ))

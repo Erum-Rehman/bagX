@@ -1,6 +1,14 @@
+@import '../../../src//responsive.scss';
+
 .program1 {
     width: 550px;
     height: 550px;
+    @include respond-to(break-tablet) {
+        width: 100%;
+    }
+    @include respond-to(break-mobile) {
+        width: 90%;
+    }
 }
 .msg-btn {
     padding: 10px 20px;
@@ -23,6 +31,9 @@
 .program {
     display: flex;
     margin: 3% 6%;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 .program_info {
     width: 40%;
@@ -42,8 +53,11 @@
     }
 }
 .img_div {
-    margin: 2% 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2% 4%;
 }
 .program2, .program3, .program4 {
-    width: 1200px;
+    width: 100%;
 }

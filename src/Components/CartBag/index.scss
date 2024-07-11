@@ -8,11 +8,12 @@
 .shopping-bag-body {
     padding: 10px 17px 30px 20px;
 }
-.bag-items {
-    display: flex;
+.bag-item {
+    display: flex!important;
     align-items: center;
     padding: 10px 0 20px;
 }
+
 .bag-image {
     width: 100px;
     height: 93px;

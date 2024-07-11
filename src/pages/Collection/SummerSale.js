@@ -21,7 +21,7 @@ const SummerSale = () => {
     
     return (
         <>
-            {location.pathname === "/" ? <p className="prd_heading">SUMMER SALE</p>
+            {location.pathname === "/summerSale" ? <p className="prd_heading">SUMMER SALE</p>
                 : location.pathname === "/bags" ?
                     <><p className="prd_heading">ALL BAGS</p>
                         <p className='bagP'>Welcome to BagX.pk, your go-to destination for high-quality, fashion-forward handbags, school bags, college bags, and kids bags in Pakistan. Discover our diverse collection of stylish designs that combine timeless elegance with the latest trends. Crafted with meticulous attention to detail,

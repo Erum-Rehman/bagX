@@ -6,12 +6,15 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import SlideshowBar from '../SlideshowBar/slideshowBar';
 import PersistentDrawerRight from '../CartBag';
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const [iscartBag, setIsCartBag] = useState(false);
   const handleCartClose = () => {
     setIsCartBag(!iscartBag);
   };
+  const location = useLocation();
+
   return (
     <>
       <PersistentDrawerRight open={iscartBag} handleCartClose={handleCartClose} />
@@ -48,7 +51,12 @@ const Header = () => {
             <li><ShoppingBagOutlinedIcon className="nav-icons" onClick={handleCartClose} /></li>
           </ul>
         </div>
-        <SlideshowBar />
+        {
+           location.pathname === "/checkout" ?
+            <div></div>
+            : <SlideshowBar />
+        }
+
       </div>
     </>
   );

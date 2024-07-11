@@ -1,78 +1,117 @@
-import React from 'react';
+// Cart.js
+
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart } from '../../store/actions/cartActions';
 import IncDec from '../IncDec';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import './index.scss';
 import ButnField from './../Button';
-
+import { fetchCartItems, updateCartItemQty, removeFromCart, removeItem } from '../../store/actions/cartActions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Cart = () => {
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const { cartItems, loading, error } = useSelector(state => state.cart);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const handleRemoveFromCart = (id) => {
-    dispatch(removeFromCart(id));
-  };
 
-  if (!cart.items || !Array.isArray(cart.items)) {
-    return <div>Your cart is empty.</div>;
-  }
+    useEffect(() => {
+        dispatch(fetchCartItems());
+    }, [dispatch]);
 
-  return (
-    <>
-      <h2 style={{marginTop: '30px'}}>Cart</h2>
-      <div className="cart-container">
-        <div className="checkout-left">
-          <div className="billing-details">
-            {cart.items.map((item) => (
-              <div key={item.id} className="cart-item">
-                <img src={item.image} alt={item.name} className="cart-image" />
-                <div className='item-name'>
-                  <h5 className="product-title">{item.name}</h5>
-                  <div className='item-price'>
-                    <div className='bag-item-count'>
-                      <IncDec
-                        onClickAdd={() => navigate("/cart")}
-                        onClickRemove={() => navigate()}
-                        count={item.count}
-                      />
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    if (!cartItems || cartItems.length === 0) {
+        return <div></div>;
+    }
+    const handleIncrement = (itemId, currentQty) => {
+        dispatch(updateCartItemQty(itemId, currentQty + 1));
+    };
+
+    const handleDecrement = (itemId, currentQty) => {
+        if (currentQty > 1) {
+            dispatch(updateCartItemQty(itemId, currentQty - 1));
+        } else {
+            dispatch(removeFromCart(itemId));
+        }
+    };
+    const removeItems = (productId) => {
+            dispatch(removeItem(productId));
+            toast.success('Item Removed successfully!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+    };
+    const calculateSubtotal = () => {
+        return cartItems.reduce((acc, item) => acc + item?.product?.new_price * item?.qty, 0);
+    };
+    return (
+        <>
+         <ToastContainer />
+            {/* <div> */}
+            <h2 style={{ marginTop: '30px' }}>Cart</h2>
+            <p style={{ fontSize: '11px', color: 'black!important' }}><Link to="/summerSale">Continue shopping</Link></p>
+            <div className="cart-container">
+                <div className="cart-left">
+                    <div className="billing-details">
+                        {cartItems.map((item,index) => {
+                            // console.log(_id, product, qty)
+
+                            return (
+
+                                <div key={item?._id||index.toString()} >
+                                    {item?.product && (
+                                        <div className="cart-item">
+                                            <img src={item?.product?.image} alt={item?.product?.name} className="cart-image" />
+                                            <div className='item-name'>
+                                                <h5 className="product-title">{item?.product?.name}</h5>
+                                                <div className='item-price'>
+                                                    <div className='bag-item-count'>
+                                                        <IncDec
+                                                            count={item?.qty}
+                                                            onClickAdd={() => handleIncrement(item?._id, item?.qty)}
+                                                            onClickRemove={() => handleDecrement(item?._id, item?.qty)}
+                                                        />
+                                                    </div>
+                                                    <span className="new-price">Rs, {item?.product?.new_price}</span>
+                                                </div>
+                                                <p onClick={() => removeItems(item?._id)} className='remove'>Remove</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )
+                        }
+                        )}
                     </div>
-                    <span className="new-price">Rs,{item.new_price}</span>
-                  </div>
                 </div>
-                {/* <IncDec
-            onClickAdd={("/cart")}
-            onClickRemove={"/cart"}
-            count={item.count}
-          /> */}
-
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="checkout-right">
-          {/* <div className="order-summary">  */}
-            <h5 className="profile" style={{ marginBotton: '5px', textAlign: 'left' }}>ORDER NOTE</h5>
-          {/* </div> */}
-          <div className="contact-cell">
-            <textarea
-              name="message"
-              className="contact-msg" rows="3"
-            ></textarea>
-          </div>
-          <ButnField onClick={() => navigate("/checkout")} title="Proceed to Checkout" />
-        </div>
-      </div>
-    </>
-  );
+                <div className="checkout-right">
+                    <h5 className="profile" style={{ marginBottom: '5px', textAlign: 'left' }}>ORDER NOTE</h5>
+                    <div className="contact-cell">
+                        <textarea
+                            name="message"
+                            className="contact-msg" rows="3"
+                        ></textarea>
+                    </div>
+                    <p className='bag-total'>SUBTOTAL: <span>Rs, ${calculateSubtotal()}</span></p>
+                    <p style={{ fontSize: '11px' }}>Shipping, taxes, and discount codes calculated at checkout.</p>
+                    <ButnField onClick={() => navigate("/checkout")} title="Proceed to Checkout" />
+                </div>
+            </div>
+            {/* </div> */}
+        </>
+    );
 };
 
 export default Cart;
-
-
-
-
-
-
-

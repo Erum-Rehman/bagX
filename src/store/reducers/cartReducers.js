@@ -1,22 +1,45 @@
+//cartreducers
+import {
+    CART_ITEMS_FETCH_REQUEST,
+    CART_ITEMS_FETCH_SUCCESS,
+    CART_ITEMS_FETCH_FAILURE,
+    CART_ITEM_ADD_SUCCESS,
+    CART_ITEM_REMOVE_SUCCESS,
+    UPDATE_CART_ITEM_QTY,
+    DELETE_CART,
+    REMOVE_ITEM
+} from '../constant/constant';
+
 const initialState = {
-  items: [],
+    cartItems: [],
+    loading: false,
+    error: null,
 };
 
-const cartReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'ADD_TO_CART':
-      return {
-        ...state,
-        items: [...state.items, action.payload],
-      };
-    case 'REMOVE_FROM_CART':
-      return {
-        ...state,
-        items: state.items.filter(item => item.id !== action.payload),
-      };
-    default:
-      return state;
-  }
+export const cartReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case CART_ITEMS_FETCH_REQUEST:
+            return { ...state, loading: true };
+        case CART_ITEMS_FETCH_SUCCESS:
+            return { ...state, loading: false, cartItems: action.payload };
+        case CART_ITEMS_FETCH_FAILURE:
+            return { ...state, loading: false, error: action.payload };
+        case CART_ITEM_ADD_SUCCESS:
+            return { ...state, cartItems: [...state.cartItems, action.payload] };
+        case CART_ITEM_REMOVE_SUCCESS:
+            return { ...state, cartItems: state.cartItems.filter(item => item._id !== action.payload) };
+        case REMOVE_ITEM:
+            return { ...state,  cartItems: state.cartItems.filter(item => item._id !== action.payload), };
+        case UPDATE_CART_ITEM_QTY:
+            return {
+                ...state,
+                cartItems: state.cartItems.map(item =>
+                    item._id === action.payload._id ? { ...item, qty: action.payload.qty } : item
+                )
+            };
+        case DELETE_CART:
+            return { ...state, cartItems: [] };
+        default:
+            return state;
+    }
 };
-
-export default cartReducer;

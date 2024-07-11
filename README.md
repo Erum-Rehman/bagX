@@ -1,70 +1,78 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Ecommerce Website Project
+This project is an ecommerce website for selling bags. It includes a frontend built with React, a backend built with Node.js and MongoDB, and uses Redux for state management.
 
-## Available Scripts
+### Table of Contents
+Features
+Technologies Used
+Installation
+Usage
+API Endpoints
+Redux Flow
+Error Handling
+Contributing
+License
 
-In the project directory, you can run:
+### Features
+Add items to the cart without authentication
+Update item quantities in the cart
+Remove items from the cart
+View all items in the cart
+Clear all items from the cart
 
-### `npm start`
+### Technologies Used
+Frontend: React
+Backend: Node.js, Express.js
+Database: MongoDB
+State Management: Redux with Thunk middleware
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Installation
+Clone the repository:
+git clone https://github.com/Erum-Rehman/bagX
+cd BagX
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Install dependencies for the backend:
+cd backend
+npm install
 
-### `npm test`
+### Install dependencies for the frontend:
+cd ../frontend
+npm install
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Set up environment variables:
+`MONGO_URI=<mongodb+srv://erumr0443:giiKAXtqicypUqUR@cluster0.zliz0gc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0>`
+PORT=5000
 
-### `npm run build`
+### Usage
+`Run the backend server:`
+cd backend
+npm run dev
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`Run the frontend server:`
+cd ../frontend
+npm start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### API Endpoints
+Add to Cart: `POST /api/cart/`
+Get Cart Items: `GET /api/cart/`
+Update Cart Item Quantity: `PUT /api/cart/:id`
+Remove from Cart: `DELETE /api/cart/:id`
+Clear Cart: `DELETE /api/cart/`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Redux Flow
+Actions:
 
-### `npm run eject`
+`CART_ITEMS_FETCH_REQUEST`
+`CART_ITEMS_FETCH_SUCCESS`
+`CART_ITEMS_FETCH_FAILURE`
+`CART_ITEM_ADD_SUCCESS`
+`CART_ITEM_REMOVE_SUCCESS`
+`UPDATE_CART_ITEM_QTY`
+`DELETE_CART`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Reducers:
+cartReducer: Manages the state of cart items, loading status, and errors.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Error Handling
+The application handles errors at both the frontend and backend levels. On the backend, appropriate HTTP status codes and error messages are returned. On the frontend, error messages are displayed to the user.
