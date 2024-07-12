@@ -17,24 +17,29 @@ const ProductDetails = () => {
     const navigate = useNavigate();
 
     const [qty, setQty] = useState(1);
+    const [inStock, setInStock] = useState(true);
 
     useEffect(() => {
         dispatch(listProductDetails(id));
     }, [dispatch, id]);
 
-    const addToCartHandler = () => {
-        if(qty >= product.quantity) {
-            alert("No items left");
+    useEffect(() => {
+        if (product?.quantity <= 0) {
+            setInStock(false);
         } else {
+            setInStock(true);
+        }
+    }, [product]);
+
+    const addToCartHandler = () => {
+        if (qty <= product.quantity) {
             dispatch(addToCart(product._id, qty));
             navigate("/cart");
+            window.location.reload();
+        } else {
+            alert("No items left");
         }
-        // dispatch(addToCart(product._id, qty));
-
-        navigate("/cart")
-        window.location.reload();
     };
-    console.log(product.quantity, 'products')
 
     return (
         <>
@@ -52,11 +57,11 @@ const ProductDetails = () => {
                         </button>
                     </div>
                     <div className="product-imgs">
-                        <img src={product.image} alt={product.name} />
+                        <img src={product?.image} alt={product?.name} />
                     </div>
                 </div>
                 <div className="product-description">
-                    <h3>{product.name}</h3>
+                    <h3>{product?.name}</h3>
                     <div className="review_div">
                         <div className="review-rating">
                             <br />
@@ -68,13 +73,27 @@ const ProductDetails = () => {
                             <span style={{ fontSize: '27px', fontWeight: '500' }}>28</span>
                         </div>
                     </div>
-                    <span style={{ fontSize: '18px' }}><s>Rs,{product.old_price}</s></span>
-                    &ensp;<span style={{ fontSize: '18px' }}>Rs,{product.new_price}</span>
+                    <span style={{ fontSize: '18px' }}><s>Rs,{product?.old_price}</s></span>
+                    &ensp;<span style={{ fontSize: '18px' }}>Rs,{product?.new_price}</span>
                     <p style={{ fontSize: '11px' }}>Shipping calculated at checkout</p>
-                    <p style={{ fontSize: '14px' }}>Available In Stock:  {product.quantity}</p>
+                    <p style={{ fontSize: '14px' }}>Available In Stock:  {product?.quantity}</p>
                     <div className="details-btn">
-                        <ButnField title="ADD TO CART" onClick={addToCartHandler} className="cart_btn" />
+                        {/* <input 
+                            type="number" 
+                            value={qty} 
+                            onChange={(e) => setQty(Number(e.target.value))} 
+                            min="1" 
+                            max={product?.quantity}
+                            className="quantity-input"
+                        /> */}
+                        <ButnField 
+                            title="ADD TO CART" 
+                            onClick={addToCartHandler} 
+                            className="cart_btn" 
+                            disabled={!inStock || qty > product?.quantity}
+                        />
                     </div>
+                    {!inStock && <p>Out of stock</p>}
                     <p>PRODUCT DETAILS</p>
                     <ul className="product-info">
                         <li>

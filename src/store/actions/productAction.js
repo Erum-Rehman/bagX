@@ -8,11 +8,13 @@ import {
   PRODUCT_DETAILS_FAIL,
 } from '../constant/constant';
 
+const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
+
 export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get('http://192.168.0.34:5000/api/products');
+    const { data } = await axios.get(`${baseUrl}/api/products`);
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
@@ -32,7 +34,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`http://192.168.0.34:5000/api/products/${id}`);
+    const { data } = await axios.get(`${baseUrl}/api/products/${id}`);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,

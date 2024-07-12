@@ -1,5 +1,4 @@
 // cartActions.js
-
 import axios from 'axios';
 import {
     CART_ITEMS_FETCH_REQUEST,
@@ -10,13 +9,16 @@ import {
     DELETE_CART,
     UPDATE_CART_ITEM_QTY,
     REMOVE_ITEM
-} from '../constant/constant';
+} from '../constant/constant'; 
+
+const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
 
 export const fetchCartItems = () => async (dispatch) => {
     dispatch({ type: CART_ITEMS_FETCH_REQUEST });
 
     try {
-        const { data } = await axios.get('http://192.168.0.34:5000/api/cart');
+        const { data } = await axios.get(`${baseUrl}/api/cart`);
+        console.log("Base URL:", baseUrl);
         dispatch({ type: CART_ITEMS_FETCH_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: CART_ITEMS_FETCH_FAILURE, payload: error.message });
@@ -25,7 +27,7 @@ export const fetchCartItems = () => async (dispatch) => {
 
 export const addToCart = (productId, qty) => async (dispatch) => {
     try {
-        const { data } = await axios.post('http://192.168.0.34:5000/api/cart', { productId, qty });
+        const { data } = await axios.post(`${baseUrl}/api/cart`, { productId, qty });
         console.log(productId, "pro",data)
 
         
@@ -36,7 +38,7 @@ export const addToCart = (productId, qty) => async (dispatch) => {
 };
 export const updateCartItemQty = (productId, qty) => async (dispatch) => {
     try {
-        const { data } = await axios.put(`http://192.168.0.34:5000/api/cart/${productId}`, { qty });
+        const { data } = await axios.put(`${baseUrl}/api/cart/${productId}`, { qty });
         dispatch({ type: UPDATE_CART_ITEM_QTY, payload: data });
     } catch (error) {
         console.error('Error updating cart item quantity:', error);
@@ -44,7 +46,7 @@ export const updateCartItemQty = (productId, qty) => async (dispatch) => {
 };
 export const removeFromCart = (productId) => async (dispatch) => {
     try {
-        await axios.delete(`http://192.168.0.34:5000/api/cart/${productId}`);
+        await axios.delete(`${baseUrl}/api/cart/${productId}`);
         dispatch({ type: CART_ITEM_REMOVE_SUCCESS, payload: productId });
     } catch (error) {
         console.error('Error removing from cart:', error);
@@ -54,7 +56,7 @@ export const removeFromCart = (productId) => async (dispatch) => {
 export const removeItem = (productId) => async (dispatch) => {
     console.log(productId,'dsdsds')
     try {
-        await axios.delete(`http://192.168.0.34:5000/api/cart/item/${productId}`);
+        await axios.delete(`${baseUrl}/api/cart/item/${productId}`);
         dispatch({ type: REMOVE_ITEM, payload: productId });
     } catch (error) {
         console.error('Error removing from cart:', error);
@@ -62,7 +64,7 @@ export const removeItem = (productId) => async (dispatch) => {
 };
 export const deleteCart = () => async (dispatch) => {
     try {
-        await axios.delete('http://192.168.0.34:5000/api/cart');
+        await axios.delete(`${baseUrl}/api/cart`);
         dispatch({ type: DELETE_CART }); 
     } catch (error) {
         console.error('Error deleting cart:', error);

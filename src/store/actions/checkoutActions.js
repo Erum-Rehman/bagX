@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { SAVE_SHIPPING_ADDRESS, PLACE_ORDER } from '../constant/constant';
 
+const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
+
 export const saveShippingAddress = (data) => (dispatch) => {
   dispatch({
     type: SAVE_SHIPPING_ADDRESS,
@@ -12,7 +14,7 @@ export const saveShippingAddress = (data) => (dispatch) => {
 
 export const placeOrder = (order) => async (dispatch) => {
   try {
-    const { data } = await axios.post('http://192.168.0.34:5000/api/orders', order);
+    const { data } = await axios.post(`${baseUrl}/api/orders`, order);
 
     dispatch({
       type: PLACE_ORDER,
