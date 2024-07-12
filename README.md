@@ -41,7 +41,7 @@ cd ../frontend
 npm install
 
 ### Set up environment variables:
-`MONGO_URI=<mongodb+srv://erumr0443:giiKAXtqicypUqUR@cluster0.zliz0gc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0>`
+`MONGO_URI=<mongoURL>`
 PORT=5000
 
 ### Usage
