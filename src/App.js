@@ -16,6 +16,7 @@ import { Route, Routes } from "react-router-dom";
 import Checkout from './pages/Checkout';
 import Cart from './Components/Cart';
 import Home from './pages/Home/Home';
+import Login from './pages/LoginForm';
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/bags" element={<Bags />}></Route>
         <Route path="/newArrivals" element={<NewArrivals />}></Route>
         <Route path='/product/:id' element={<ProductDetail />}></Route>
+        <Route path="/register" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
       </Routes>

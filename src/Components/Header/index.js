@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './style.scss';
+import { AiOutlineUser } from "react-icons/ai";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import SlideshowBar from '../SlideshowBar/slideshowBar';
 import PersistentDrawerRight from '../CartBag';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PersistentDrawerLeft from './PageNavbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts, searchProducts } from '../../store/actions/productAction';
+import { logoutUser } from '../../store/actions/userActions';
 
 const Header = () => {
   const [isCartBag, setIsCartBag] = useState(false);
@@ -20,9 +22,12 @@ const Header = () => {
   const [width, setWidth] = useState(window.screen.width);
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const productList = useSelector((state) => state.productList);
   const { products, filteredProducts } = productList;
+  const user = useSelector((state) => state.user);
+  const { userInfo, isAuthenticated } = user;
 
   useEffect(() => {
     dispatch(listProducts());
@@ -59,7 +64,14 @@ const Header = () => {
   const handleSearchInput = (e) => {
     setSearchQuery(e.target.value);
   };
-
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()); 
+      navigate("/login"); 
+  } catch (error) {
+      console.error("Logout failed:", error.message);
+  }
+};
   return (
     <>
       <PersistentDrawerRight open={isCartBag} handleCartClose={handleCartClose} />
@@ -109,7 +121,18 @@ const Header = () => {
               }
 
               <ul className='header_icons'>
-                <li><LocalShippingOutlinedIcon className="nav-icons" /></li>
+                {isAuthenticated ? (
+                  <li className="user-dropdown">
+                    <div className="username" onClick={handleMenuClose}>
+                      {userInfo.firstName}
+                    </div>
+                    <div className="dropdown-content">
+                      <p onClick={handleLogout}>Logout</p>
+                    </div>
+                  </li>
+                ) : (
+                  <li><AiOutlineUser className="nav-icons" onClick={() => navigate("/register")} /></li>
+                )}
                 <li><SearchOutlinedIcon className="nav-icons" onClick={handleSearchToggle} /></li>
                 <li><ShoppingBagOutlinedIcon className="nav-icons" onClick={handleCartClose} /></li>
               </ul>
@@ -119,14 +142,14 @@ const Header = () => {
         {location.pathname !== "/checkout" && !isSearchVisible && <SlideshowBar />}
       </div>
       <div className="product-list">
-      {searchQuery && filteredProducts && filteredProducts.map(item => (
+        {searchQuery && filteredProducts && filteredProducts.map(item => (
           <div key={item.id} className="product-item">
-                <div className='tag'>Sale</div>
+            <div className='tag'>Sale</div>
             <img src={item.image} alt={item.name} className="product-image" />
             <div className="product-details">
               <h2>{item.name}</h2>
               <span className="price"><s>Rs.{item.old_price}</s></span>
-                &ensp;<span className="price">Rs.{item.new_price}</span>
+              &ensp;<span className="price">Rs.{item.new_price}</span>
               <p>{item.description}</p>
             </div>
           </div>

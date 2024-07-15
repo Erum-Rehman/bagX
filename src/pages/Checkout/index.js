@@ -51,7 +51,6 @@ const Checkout = () => {
         });
         await dispatch(deleteCart());
 
-        // Reset form data after placing order and deleting cart
         setFormData({
             fullName: '',
             country: 'Pakistan',
