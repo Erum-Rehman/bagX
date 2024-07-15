@@ -33,6 +33,22 @@ marquee p {
   margin: 2% 3%;
 
 }
+.menu-icon {
+  float: right;
+}
+
+.nav-item {
+  list-style-type: none;
+  font-size: 15px;
+  padding-left: 2rem !important;
+  li {
+    padding-left: 25px !important;
+  }
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+}
 .nav-items {
   display: flex;
   justify-content: center;

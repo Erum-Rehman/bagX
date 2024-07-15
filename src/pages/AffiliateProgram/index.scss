@@ -3,11 +3,9 @@
 .program1 {
     width: 550px;
     height: 550px;
-    @include respond-to(break-tablet) {
+    
+    @include respond-to(mobile-small) {
         width: 100%;
-    }
-    @include respond-to(break-mobile) {
-        width: 90%;
     }
 }
 .msg-btn {
@@ -34,6 +32,9 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    @include respond-to(mobile-small) {
+        justify-content: start;
+    }
 }
 .program_info {
     width: 40%;
@@ -43,10 +44,17 @@
     text-align: left;
     align-items: flex-start;
     justify-content: center;
-
+    @include respond-to(mobile-small) {
+        margin-left: 0%;
+        text-align: justify;
+        width: 100%;
+    }
     h6 {
         color: gray;
         font-weight: 600;
+        @include respond-to(mobile-small) {
+            margin-top: 4%;
+        }
     }
     p {
         color: gray;

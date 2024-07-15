@@ -1,8 +1,19 @@
+@import '../../../src//responsive.scss';
+
 .contact {
     display: flex;
     flex-direction: column;
     text-align: justify;
     margin: 4% 0 4% 16%;
+    @include respond-to(mobile-small) {
+        margin: 4%;
+    }
+    img {
+        @include respond-to(mobile-small) {
+            width: 95%;
+        }
+        
+    }
 }
 .contact_info {
     font-size: 13px;

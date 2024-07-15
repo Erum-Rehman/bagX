@@ -8,7 +8,7 @@ const Contact = () => {
             <p className="prd_heading">CONTACT BAG X TEAM</p>
             <div className='contact'>
                 <div>
-                    <img src={require("../../assets/about.png")} alt="about" className='about' />
+                    <img src={require("../../assets/about.png")} alt="about"  />
                 </div>
                 <div className='contact_info'>
                     <p>Corporate Office: Bag X Building, 6 - A Waris Road Lahore Pakistan</p>

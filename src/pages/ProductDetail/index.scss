@@ -4,7 +4,6 @@
     width: 95%;
     margin: 100px auto;
     display: flex;
-    height: 100vh;
     overflow: hidden;
 
     @include respond-to(tablet) {
@@ -100,6 +99,9 @@
     width: 60%;
     overflow-y: scroll;
     height: 100vh;
+    @include respond-to(tablet-mini) {
+        width: 100%;
+    }
 }
 .product-description::-webkit-scrollbar {
     display: none;
@@ -112,10 +114,11 @@
 .product-description h3 {
     text-align: left;
     width: 70%;
-}
-.product-description h3 {
     font-weight: 600;
     font-size: 30px;
+    @include respond-to(mobile-small) {
+        font-size: 19px;
+    }
 }
 .product-description h4 {
     font-size: 28px;

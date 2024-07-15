@@ -17,6 +17,9 @@
     background-image: url(../../assets/bg.png);
     background-position: center;
     background-size: cover;
+    @include respond-to(mobile-small) {
+    height: 165px;
+   }
   }
   .categories {
     display: flex;
@@ -31,6 +34,9 @@
   
     img {
       width: 150px;
+      @include respond-to(mobile-small) {
+      width: 95px;
+       }
     }
   }
   .container-img {
@@ -99,4 +105,10 @@
     font-size: 18px;
     /* font-weight: 600; */
     padding-bottom: 3px;
+}
+.wholeSale {
+  width: 600px;
+  @include respond-to(mobile-small) {
+    width: 95%!important;
+}
 }
