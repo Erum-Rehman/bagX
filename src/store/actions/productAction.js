@@ -6,6 +6,7 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
+  PRODUCT_SEARCH
 } from '../constant/constant';
 
 const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
@@ -29,7 +30,20 @@ export const listProducts = () => async (dispatch) => {
     });
   }
 };
+export const searchProducts = (query) => (dispatch, getState) => {
+  const {
+      productList: { products },
+  } = getState();
 
+  const filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  dispatch({
+      type: PRODUCT_SEARCH,
+      payload: filteredProducts,
+  });
+};
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });

@@ -80,3 +80,62 @@ marquee p {
   font-weight: 700;
   cursor: pointer;
 }
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: #fff;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+
+  input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    &:focus {
+      border: none!important;
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+  }
+}
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  margin: 20px 36px;
+}
+
+.product-item {
+  padding: 10px;
+  max-width: 260px;
+  text-align: center;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.product-details {
+  margin-top: 10px;
+
+  h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: 5px 0;
+  }
+}
