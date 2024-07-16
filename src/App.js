@@ -17,10 +17,13 @@ import Checkout from './pages/Checkout';
 import Cart from './Components/Cart';
 import Home from './pages/Home/Home';
 import Login from './pages/LoginForm';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div className="App"> 
+     <ToastContainer />
       <Header />
       <Routes>
         <Route path="/" element={<Home />}></Route>

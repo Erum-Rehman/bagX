@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import './index.scss';
-import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ButnField from "../Button";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -8,8 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { loginUser } from '../../store/actions/userActions';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -20,32 +17,18 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [passwordType, setPasswordType] = useState("password");
-    const [userDetails, setUserDetails] = useState(null);
-
     const togglePassword = () => {
         setPasswordType(passwordType === "password" ? "text" : "password");
     };
-
     const handleLogin = async (values, { resetForm }) => {
         dispatch(loginUser(values));
-        toast.success('Login successfully!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
         resetForm();
     };
 
     return (
         <>
-            <ToastContainer />
             <Formik
                 initialValues={{ email: "", password: "" }}
                 validationSchema={LoginSchema}
@@ -84,21 +67,10 @@ const Login = () => {
                             <label style={{ color: "#505050", fontSize: '17px', fontWeight: '500' }}>Remember Me</label>
                         </div>
                         <ButnField title="LOGIN ACCOUNT" type="submit" />
-                        {/* {userDetails && (
-                        <div className="userDetails">
-                            <h3>Welcome, {userDetails.name}</h3>
-                            <p>Email: {userDetails.email}</p>
-                            <p>City: {userDetails.city}</p>
-                            <p>Address: {userDetails.address}</p>
-                            <p>Contact: {userDetails.contact}</p>
-                            <p>Country: {userDetails.country}</p>
-                        </div>
-                    )} */}
                     </Form>
                 )}
             </Formik>
         </>
-
     );
 };
 

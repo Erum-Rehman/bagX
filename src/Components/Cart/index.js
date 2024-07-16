@@ -7,6 +7,7 @@ import ButnField from './../Button';
 import { fetchCartItems, updateCartItemQty, removeFromCart, removeItem } from '../../store/actions/cartActions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { showToast } from '../../utils/toastUtils';                                         
 
 const Cart = () => {
     const { cartItems, loading, error } = useSelector(state => state.cart);
@@ -33,6 +34,7 @@ const Cart = () => {
         if (currentQty < productQty) {
             dispatch(updateCartItemQty(itemId, currentQty + 1));
         } else {
+        // showToast('No more stock available', "error")
             toast.error('No more stock available');
         }
     };

@@ -10,6 +10,7 @@ import {
     UPDATE_CART_ITEM_QTY,
     REMOVE_ITEM
 } from '../constant/constant'; 
+import { showToast } from '../../utils/toastUtils';
 
 const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
 
@@ -29,9 +30,8 @@ export const addToCart = (productId, qty) => async (dispatch) => {
     try {
         const { data } = await axios.post(`${baseUrl}/api/cart`, { productId, qty });
         console.log(productId, "pro",data)
-
-        
         dispatch({ type: CART_ITEM_ADD_SUCCESS, payload: data?.cartItem });
+        showToast("Item added to cart successfully", "success")
     } catch (error) {
         console.error('Error adding to cart:', error);
     }
@@ -41,15 +41,17 @@ export const updateCartItemQty = (productId, qty) => async (dispatch) => {
         const { data } = await axios.put(`${baseUrl}/api/cart/${productId}`, { qty });
         dispatch({ type: UPDATE_CART_ITEM_QTY, payload: data });
     } catch (error) {
-        console.error('Error updating cart item quantity:', error);
+        showToast('No more stock available', "error")
+        // console.error('No more stock available', "error");
     }
 };
 export const removeFromCart = (productId) => async (dispatch) => {
     try {
         await axios.delete(`${baseUrl}/api/cart/${productId}`);
         dispatch({ type: CART_ITEM_REMOVE_SUCCESS, payload: productId });
+        showToast("Item Removed from successfully", "success")
     } catch (error) {
-        console.error('Error removing from cart:', error);
+        showToast("Error removing from cart", "error")        
     }
 };
 
@@ -58,8 +60,10 @@ export const removeItem = (productId) => async (dispatch) => {
     try {
         await axios.delete(`${baseUrl}/api/cart/item/${productId}`);
         dispatch({ type: REMOVE_ITEM, payload: productId });
+        showToast("Item Removed successfully", "success")
+
     } catch (error) {
-        console.error('Error removing from cart:', error);
+        showToast("Error removing from cart", "error")
     }
 };
 export const deleteCart = () => async (dispatch) => {

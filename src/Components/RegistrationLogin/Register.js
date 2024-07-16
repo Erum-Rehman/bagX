@@ -7,8 +7,6 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { registerUser } from '../../store/actions/userActions';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const RegexExp = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/);
 const RegistrationSchema = Yup.object().shape({
@@ -39,28 +37,16 @@ const Registration = () => {
     const togglePassword = () => {
         setPasswordType(passwordType === "password" ? "text" : "password");
     }
-
     const toggleConfrmPassword = () => {
         setConfrmpasswordType(ConfrmpasswordType === "password" ? "text" : "password");
     }
-
     const handleRegistration = async (values, { resetForm }) => {
         dispatch(registerUser(values));
-        toast.success('User Registered successfully!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
         resetForm();
     }
 
     return (
         <>
-            <ToastContainer />
             <Formik
                 initialValues={{
                     firstName: "",
