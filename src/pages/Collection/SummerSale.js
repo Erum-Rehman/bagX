@@ -14,7 +14,12 @@ const SummerSale = () => {
     const location = useLocation();
     const productList = useSelector((state) => state.productList);
     const { products } = productList;
+    console.log({products})
+    // const user = useSelector((state) => state.user);
+    // const { userInfo, isAuthenticated } = user;
+    
 
+    // console.log({userId})
     useEffect(() => {
         dispatch(listProducts());
     }, [dispatch]);

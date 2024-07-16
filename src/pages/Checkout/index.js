@@ -12,10 +12,14 @@ const Checkout = () => {
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const { cartItems = [] } = cart;
+    const userInfo = useSelector((state) => state.user.userInfo);
+    const userId = userInfo ? userInfo.id : null;
 
     useEffect(() => {
-        dispatch(fetchCartItems());
-    }, [dispatch]);
+        if (userId) {
+            dispatch(fetchCartItems(userId)); 
+        }
+    }, [dispatch, userId]);
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -36,33 +40,61 @@ const Checkout = () => {
         });
     };
 
+    // const submitHandler = async (e) => {
+    //     e.preventDefault();
+    //     console.log('Submitting order:', { userId, cartItems, formData });
+    //     await dispatch(saveShippingAddress(formData));
+    //     await dispatch(placeOrder({userId, cartItems, shippingAddress: formData, paymentMethod: formData.paymentMethod }));
+    //     toast.success('Order placed successfully!', {
+    //         position: "top-right",
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //     });
+    //     await dispatch(deleteCart());
+
+    //     setFormData({
+    //         fullName: '',
+    //         country: 'Pakistan',
+    //         address: '',
+    //         city: '',
+    //         postCode: '',
+    //         phoneNumber: '',
+    //         email: '',
+    //         paymentMethod: 'Cash on delivery',
+    //     });
+    // };
     const submitHandler = async (e) => {
         e.preventDefault();
-        await dispatch(saveShippingAddress(formData));
-        await dispatch(placeOrder({ cartItems, shippingAddress: formData, paymentMethod: formData.paymentMethod }));
-        toast.success('Order placed successfully!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-        await dispatch(deleteCart());
 
-        setFormData({
-            fullName: '',
-            country: 'Pakistan',
-            address: '',
-            city: '',
-            postCode: '',
-            phoneNumber: '',
-            email: '',
-            paymentMethod: 'Cash on delivery',
-        });
+        try {
+            await dispatch(saveShippingAddress(formData));
+            await dispatch(placeOrder({
+                userId,
+                cartItems,
+                shippingAddress: formData,
+                paymentMethod: formData.paymentMethod
+            }));
+
+            console.log('Order placed successfully!');
+            await dispatch(deleteCart(userId));
+            setFormData({
+                fullName: '',
+                country: 'Pakistan',
+                address: '',
+                city: '',
+                postalCode: '',
+                phoneNumber: '',
+                email: '',
+                paymentMethod: 'Cash on delivery',
+            });
+        } catch (error) {
+            console.error('Error placing order:', error);
+        }
     };
-
     const calculateSubtotal = () => {
         return cartItems.reduce((acc, item) => acc + item?.product?.new_price * item?.qty, 0);
     };

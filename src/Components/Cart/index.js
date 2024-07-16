@@ -13,10 +13,14 @@ const Cart = () => {
     const { cartItems, loading, error } = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const userInfo = useSelector((state) => state.user.userInfo);
+    const userId = userInfo ? userInfo.id : null;
 
     useEffect(() => {
-        dispatch(fetchCartItems());
-    }, [dispatch]);
+        if (userId) {
+            dispatch(fetchCartItems(userId)); 
+        }
+    }, [dispatch, userId]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -32,7 +36,7 @@ const Cart = () => {
 
     const handleIncrement = (itemId, currentQty, productQty) => {
         if (currentQty < productQty) {
-            dispatch(updateCartItemQty(itemId, currentQty + 1));
+            dispatch(updateCartItemQty(itemId, currentQty + 1, userId));
         } else {
         // showToast('No more stock available', "error")
             toast.error('No more stock available');
@@ -41,14 +45,15 @@ const Cart = () => {
 
     const handleDecrement = (itemId, currentQty) => {
         if (currentQty > 1) {
-            dispatch(updateCartItemQty(itemId, currentQty - 1));
+            dispatch(updateCartItemQty(itemId, currentQty - 1, userId));
         } else {
-            dispatch(removeFromCart(itemId));
+            dispatch(removeFromCart(itemId, userId));
         }
     };
 
     const removeItems = (productId) => {
-        dispatch(removeItem(productId));
+        dispatch(removeItem(productId, userId));
+        console.log({userId})
         toast.success('Item Removed successfully!', {
             position: "top-right",
             autoClose: 2000,

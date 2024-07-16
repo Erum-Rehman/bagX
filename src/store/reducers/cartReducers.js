@@ -1,4 +1,4 @@
-//cartreducers
+// cartreducers.js
 import {
     CART_ITEMS_FETCH_REQUEST,
     CART_ITEMS_FETCH_SUCCESS,
@@ -25,26 +25,26 @@ export const cartReducer = (state = initialState, action) => {
         case CART_ITEMS_FETCH_FAILURE:
             return { ...state, loading: false, error: action.payload };
         case CART_ITEM_ADD_SUCCESS:
-            // return { ...state, cartItems: [...state.cartItems, action.payload] };
-            const item = action.payload;
-                const existItem = state.cartItems.find(x => x.product === item.product);
-    
-                if (existItem) {
-                    return {
-                        ...state,
-                        cartItems: state.cartItems.map(x => x.product === existItem.product ? item : x)
-                    };
-                } else {
-                    return {
-                        ...state,
-                        cartItems: [...state.cartItems, item]
-                    };
-                }
-                
+            const newItem = action.payload.cartItem;
+            const existingItem = state.cartItems.find(item => item.product === newItem.product);
+            
+            if (existingItem) {
+                return {
+                    ...state,
+                    cartItems: state.cartItems.map(item =>
+                        item.product === existingItem.product ? newItem : item
+                    )
+                };
+            } else {
+                return {
+                    ...state,
+                    cartItems: [...state.cartItems, newItem]
+                };
+            }
         case CART_ITEM_REMOVE_SUCCESS:
             return { ...state, cartItems: state.cartItems.filter(item => item._id !== action.payload) };
         case REMOVE_ITEM:
-            return { ...state,  cartItems: state.cartItems.filter(item => item._id !== action.payload), };
+            return { ...state, cartItems: state.cartItems.filter(item => item._id !== action.payload) };
         case UPDATE_CART_ITEM_QTY:
             return {
                 ...state,

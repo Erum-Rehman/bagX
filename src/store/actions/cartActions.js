@@ -14,61 +14,78 @@ import { showToast } from '../../utils/toastUtils';
 
 const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
 
+// Fetch Cart Items
 export const fetchCartItems = () => async (dispatch) => {
     dispatch({ type: CART_ITEMS_FETCH_REQUEST });
 
     try {
-        const { data } = await axios.get(`${baseUrl}/api/cart`);
-        console.log("Base URL:", baseUrl);
+        const { data } = await axios.get(`${baseUrl}/api/cart/items`);
         dispatch({ type: CART_ITEMS_FETCH_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: CART_ITEMS_FETCH_FAILURE, payload: error.message });
     }
 };
 
-export const addToCart = (productId, qty) => async (dispatch) => {
+// Add to Cart
+export const addToCart = (userId, productId, qty) => async (dispatch) => {
+    console.log('userId:', {userId}, {productId} );
     try {
-        const { data } = await axios.post(`${baseUrl}/api/cart`, { productId, qty });
-        console.log(productId, "pro",data)
+        const { data } = await axios.post(`${baseUrl}/api/cart`, { userId, productId, qty });
         dispatch({ type: CART_ITEM_ADD_SUCCESS, payload: data?.cartItem });
-        showToast("Item added to cart successfully", "success")
+        showToast("Item added to cart successfully", "success");
     } catch (error) {
         console.error('Error adding to cart:', error);
     }
-};
-export const updateCartItemQty = (productId, qty) => async (dispatch) => {
+};                                                                                                                                      
+
+// Update Cart Item Quantity
+export const updateCartItemQty = (cartItemId, qty, userId) => async (dispatch) => {
     try {
-        const { data } = await axios.put(`${baseUrl}/api/cart/${productId}`, { qty });
+        const { data } = await axios.put(`${baseUrl}/api/cart/${cartItemId}`, { qty, userId });
         dispatch({ type: UPDATE_CART_ITEM_QTY, payload: data });
+        showToast('Cart item updated successfully', "success");
     } catch (error) {
-        showToast('No more stock available', "error")
-        // console.error('No more stock available', "error");
-    }
-};
-export const removeFromCart = (productId) => async (dispatch) => {
-    try {
-        await axios.delete(`${baseUrl}/api/cart/${productId}`);
-        dispatch({ type: CART_ITEM_REMOVE_SUCCESS, payload: productId });
-        showToast("Item Removed from successfully", "success")
-    } catch (error) {
-        showToast("Error removing from cart", "error")        
+        console.error('Error updating cart item quantity:', error);
+        showToast('Error updating cart item quantity', "error");
     }
 };
 
-export const removeItem = (productId) => async (dispatch) => {
-    console.log(productId,'dsdsds')
+// Remove from Cart
+export const removeFromCart = (cartItemId, userId) => async (dispatch) => {
     try {
-        await axios.delete(`${baseUrl}/api/cart/item/${productId}`);
-        dispatch({ type: REMOVE_ITEM, payload: productId });
-        showToast("Item Removed successfully", "success")
-
+        await axios.delete(`${baseUrl}/api/cart/${cartItemId}`,  {
+            data: { userId }
+        }
+        );
+        dispatch({ type: CART_ITEM_REMOVE_SUCCESS, payload: cartItemId });
+        showToast("Item removed from cart successfully", "success");
     } catch (error) {
-        showToast("Error removing from cart", "error")
+        showToast("Error removing from cart", "error");        
     }
 };
-export const deleteCart = () => async (dispatch) => {
+
+export const removeItem = (cartItemId, userId) => async (dispatch) => {
     try {
-        await axios.delete(`${baseUrl}/api/cart`);
+        const response = await axios.delete(`${baseUrl}/api/cart/item/${cartItemId}`, {
+            data: { userId }
+        });
+
+        if (response.data.message === 'Item removed from cart') {
+            dispatch({ type: REMOVE_ITEM, payload: cartItemId });
+            showToast("Item removed from cart successfully", "success");
+        } else {
+            showToast("Error removing from cart", "error");
+        }
+    } catch (error) {
+        console.error('Error removing from cart:', error);
+        showToast("Error removing from cart", "error");
+    }
+};
+// Delete Cart
+export const deleteCart = (userId) => async (dispatch) => {
+    console.log({userId})
+    try {
+        await axios.delete(`${baseUrl}/api/cart`, { userId });
         dispatch({ type: DELETE_CART }); 
     } catch (error) {
         console.error('Error deleting cart:', error);

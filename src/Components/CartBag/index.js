@@ -30,10 +30,14 @@ export default function PersistentDrawerRight({ handleCartClose, open }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const drawerRef = useRef(null);
-
+    const userInfo = useSelector((state) => state.user.userInfo);
+    const userId = userInfo ? userInfo.id : null;
+    
     useEffect(() => {
-        dispatch(fetchCartItems());
-    }, [dispatch]);
+        if (userId) {
+            dispatch(fetchCartItems(userId)); 
+        }
+    }, [dispatch, userId]);
 
     if (loading) {
         return <div>Loading...</div>;

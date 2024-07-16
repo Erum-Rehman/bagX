@@ -12,13 +12,15 @@ import { useDispatch, useSelector } from 'react-redux';
 const ProductDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const productDetails = useSelector((state) => state.productDetails);
     const { product } = productDetails;
-    const navigate = useNavigate();
+
+    const userInfo = useSelector((state) => state.user.userInfo);
+    const userId = userInfo ? userInfo.id : null;
 
     const [qty, setQty] = useState(1);
     const [inStock, setInStock] = useState(true);
-
     useEffect(() => {
         dispatch(listProductDetails(id));
     }, [dispatch, id]);
@@ -33,8 +35,8 @@ const ProductDetails = () => {
 
     const addToCartHandler = () => {
         if (qty <= product.quantity) {
-            dispatch(addToCart(product._id, qty));
-            navigate("/cart");
+            dispatch(addToCart(userId, product._id, qty)); 
+            navigate("/cart"); 
             window.location.reload();
         } else {
             alert("No items left");

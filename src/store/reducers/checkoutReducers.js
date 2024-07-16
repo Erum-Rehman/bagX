@@ -1,5 +1,5 @@
 import {
-  SAVE_SHIPPING_ADDRESS, PLACE_ORDER, USER_ORDER_FETCH_SUCCESS
+  SAVE_SHIPPING_ADDRESS, PLACE_ORDER, GET_USER_ORDERS_SUCCESS
 } from '../constant/constant';
 
 const initialState = {
@@ -16,7 +16,7 @@ export const orderReducer = (state = initialState, action) => {
       return { ...state, shippingAddress: action.payload };
     case PLACE_ORDER:
       return { ...state, order: action.payload };
-    case USER_ORDER_FETCH_SUCCESS:
+    case GET_USER_ORDERS_SUCCESS:
       return { ...state, loading: false, order: action.payload };
     default:
       return state;
