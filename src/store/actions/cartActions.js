@@ -85,8 +85,10 @@ export const removeItem = (cartItemId, userId) => async (dispatch) => {
 export const deleteCart = (userId) => async (dispatch) => {
     console.log({userId})
     try {
-        await axios.delete(`${baseUrl}/api/cart`, { userId });
-        dispatch({ type: DELETE_CART }); 
+        await axios.delete(`${baseUrl}/api/cart`, {
+            data: { userId }
+          });        
+        dispatch({ type: DELETE_CART,payload: [] }); 
     } catch (error) {
         console.error('Error deleting cart:', error);
     }
