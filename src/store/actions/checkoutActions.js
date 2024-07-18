@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { SAVE_SHIPPING_ADDRESS, PLACE_ORDER, GET_USER_ORDERS_SUCCESS } from '../constant/constant';
+import { SAVE_SHIPPING_ADDRESS, PLACE_ORDER, GET_USER_ORDERS_SUCCESS, GET_USER_ORDERS_FAILURE } from '../constant/constant';
+import { showToast } from '../../utils/toastUtils';
 
 const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
 
@@ -20,20 +21,21 @@ export const placeOrder = (order) => async (dispatch) => {
       type: PLACE_ORDER,
       payload: data
     });
+    showToast("Order placed successfully", "success");
 
     localStorage.removeItem('cartItems');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
   } catch (error) {
-    console.error('Error placing order:', error);
+    showToast('Error placing order:', error);
   }
 };
 
-export const getUserOrders = () => async (dispatch) => {
+export const getUserOrders = (userId) => async (dispatch) => {
   try {
-      const { data } = await axios.get(`${baseUrl}/api/orders/items`);
-      dispatch({ type: GET_USER_ORDERS_SUCCESS, payload: data });
+    const response = await axios.get(`${baseUrl}/api/orders/items/${userId}`);
+    dispatch({ type: GET_USER_ORDERS_SUCCESS, payload: response.data });
   } catch (error) {
-    console.error('Error finding order:', error);
+    dispatch({ type: GET_USER_ORDERS_FAILURE, error: 'Failed to fetch orders' });
   }
 };

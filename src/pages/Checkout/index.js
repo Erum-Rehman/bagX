@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './index.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from "formik";
-import { saveShippingAddress, placeOrder } from '../../store/actions/checkoutActions';
+import { saveShippingAddress, placeOrder, getUserOrders } from '../../store/actions/checkoutActions';
 import { fetchCartItems, deleteCart, updateCartItemQty, removeFromCart } from '../../store/actions/cartActions';
 import IncDec from '../../Components/IncDec';
 import { ToastContainer, toast } from 'react-toastify';
@@ -40,33 +40,6 @@ const Checkout = () => {
         });
     };
 
-    // const submitHandler = async (e) => {
-    //     e.preventDefault();
-    //     console.log('Submitting order:', { userId, cartItems, formData });
-    //     await dispatch(saveShippingAddress(formData));
-    //     await dispatch(placeOrder({userId, cartItems, shippingAddress: formData, paymentMethod: formData.paymentMethod }));
-    //     toast.success('Order placed successfully!', {
-    //         position: "top-right",
-    //         autoClose: 2000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //     });
-    //     await dispatch(deleteCart());
-
-    //     setFormData({
-    //         fullName: '',
-    //         country: 'Pakistan',
-    //         address: '',
-    //         city: '',
-    //         postCode: '',
-    //         phoneNumber: '',
-    //         email: '',
-    //         paymentMethod: 'Cash on delivery',
-    //     });
-    // };
     const submitHandler = async (e) => {
         e.preventDefault();
 
@@ -78,12 +51,10 @@ const Checkout = () => {
                 shippingAddress: formData,
                 paymentMethod: formData.paymentMethod
             }));
-
-            console.log('Order placed successfully!');
             await dispatch(deleteCart(userId));
             setFormData({
                 fullName: '',
-                country: 'Pakistan',
+                country: 'Country',
                 address: '',
                 city: '',
                 postalCode: '',

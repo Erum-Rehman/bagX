@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './style.scss';
 import { AiOutlineUser } from "react-icons/ai";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -7,16 +7,17 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import SlideshowBar from '../SlideshowBar/slideshowBar';
 import PersistentDrawerRight from '../CartBag';
-import { useLocation, useNavigate } from "react-router-dom";
 import PersistentDrawerLeft from './PageNavbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts, searchProducts } from '../../store/actions/productAction';
 import { logoutUser } from '../../store/actions/userActions';
+import { getUserOrders } from '../../store/actions/checkoutActions';
 
-const Header = () => {
+const Header = ({ product }) => {
   const [isCartBag, setIsCartBag] = useState(false);
   const [isNavbar, setIsNavbar] = useState(false);
+  const [isUser, setIsUser] = useState(false);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [width, setWidth] = useState(window.screen.width);
@@ -28,6 +29,7 @@ const Header = () => {
   const { products, filteredProducts } = productList;
   const user = useSelector((state) => state.user);
   const { userInfo, isAuthenticated } = user;
+  const userId = userInfo ? userInfo.id : null;
 
   useEffect(() => {
     dispatch(listProducts());
@@ -39,9 +41,11 @@ const Header = () => {
       window.removeEventListener('resize', updateDimensions);
     };
   }, []);
-
+  
   useEffect(() => {
-    dispatch(searchProducts(searchQuery));
+    if (searchQuery) {
+      dispatch(searchProducts(searchQuery));
+    }
   }, [dispatch, searchQuery]);
 
   const handleCartClose = () => {
@@ -52,9 +56,13 @@ const Header = () => {
     setIsNavbar(!isNavbar);
   };
 
+  const handleUserMenu = () => {
+    setIsUser(!isUser);
+  };
+
   const handleSearchToggle = () => {
     setIsSearchVisible(!isSearchVisible);
-    setSearchQuery('')
+    setSearchQuery('');
   };
 
   const updateDimensions = () => {
@@ -64,14 +72,36 @@ const Header = () => {
   const handleSearchInput = (e) => {
     setSearchQuery(e.target.value);
   };
+
   const handleLogout = async () => {
     try {
-      await dispatch(logoutUser()); 
-      navigate("/login"); 
-  } catch (error) {
+      await dispatch(logoutUser());
+      navigate("/login");
+    } catch (error) {
       console.error("Logout failed:", error.message);
-  }
-};
+    }
+  };
+
+  const orderHistory = async () => {
+    try {
+      if (userId) {
+        await dispatch(getUserOrders(userId));
+        console.log('User orders fetched successfully');
+        navigate('/orders');
+      } else {
+        console.error('User ID is undefined');
+      }
+    } catch (error) {
+      console.error('Error fetching user orders:', error);
+    }
+  };
+
+  const handleProductClick = (productId) => {
+    setIsSearchVisible(false);
+    navigate(`/product/${productId}`);
+    setSearchQuery('');
+  };
+
   return (
     <>
       <PersistentDrawerRight open={isCartBag} handleCartClose={handleCartClose} />
@@ -123,12 +153,15 @@ const Header = () => {
               <ul className='header_icons'>
                 {isAuthenticated ? (
                   <li className="user-dropdown">
-                    <div className="username" onClick={handleMenuClose}>
+                    <div className="username" onClick={handleUserMenu}>
                       {userInfo.firstName}
                     </div>
-                    <div className="dropdown-content">
-                      <p onClick={handleLogout}>Logout</p>
-                    </div>
+                    {isUser && (
+                      <div className="dropdown-content">
+                        <p onClick={handleLogout}>Logout</p> 
+                        <p onClick={orderHistory}>Orders</p>
+                      </div>
+                    )}
                   </li>
                 ) : (
                   <li><AiOutlineUser className="nav-icons" onClick={() => navigate("/register")} /></li>
@@ -145,7 +178,9 @@ const Header = () => {
         {searchQuery && filteredProducts && filteredProducts.map(item => (
           <div key={item.id} className="product-item">
             <div className='tag'>Sale</div>
-            <img src={item.image} alt={item.name} className="product-image" />
+            <div onClick={() => handleProductClick(item._id)}>
+              <img src={item.image} alt={item.name} className="product-image" />
+            </div>
             <div className="product-details">
               <h2>{item.name}</h2>
               <span className="price"><s>Rs.{item.old_price}</s></span>

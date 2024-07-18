@@ -1,5 +1,5 @@
 import {
-  SAVE_SHIPPING_ADDRESS, PLACE_ORDER, GET_USER_ORDERS_SUCCESS
+  SAVE_SHIPPING_ADDRESS, PLACE_ORDER, GET_USER_ORDERS_SUCCESS, GET_USER_ORDERS_FAILURE
 } from '../constant/constant';
 
 const initialState = {
@@ -18,6 +18,8 @@ export const orderReducer = (state = initialState, action) => {
       return { ...state, order: action.payload };
     case GET_USER_ORDERS_SUCCESS:
       return { ...state, loading: false, order: action.payload };
+    case GET_USER_ORDERS_FAILURE:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
