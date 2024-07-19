@@ -20,7 +20,7 @@ import Login from './pages/LoginForm';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Orders from './Components/Orders';
-
+import ChatbotComponent from './chatbot/ChatbotComponent';
 function App() {
   return (
     <div className="App"> 
@@ -42,6 +42,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
       </Routes>
+      <ChatbotComponent/>
       <ScreenFooter /> 
     </div>
   ); 
