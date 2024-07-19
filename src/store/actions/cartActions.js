@@ -36,17 +36,14 @@ export const addToCart = (userId, productId, qty) => async (dispatch) => {
     } catch (error) {
         console.error('Error adding to cart:', error);
     }
-};                                                                                                                                      
-
+};
 // Update Cart Item Quantity
 export const updateCartItemQty = (cartItemId, qty, userId) => async (dispatch) => {
     try {
         const { data } = await axios.put(`${baseUrl}/api/cart/${cartItemId}`, { qty, userId });
         dispatch({ type: UPDATE_CART_ITEM_QTY, payload: data });
-        showToast('Cart item updated successfully', "success");
     } catch (error) {
         console.error('Error updating cart item quantity:', error);
-        showToast('Error updating cart item quantity', "error");
     }
 };
 
@@ -58,7 +55,7 @@ export const removeFromCart = (cartItemId, userId) => async (dispatch) => {
         }
         );
         dispatch({ type: CART_ITEM_REMOVE_SUCCESS, payload: cartItemId });
-        showToast("Item removed from cart successfully", "success");
+        showToast("Item removed successfully", "success");
     } catch (error) {
         showToast("Error removing from cart", "error");        
     }
@@ -72,12 +69,11 @@ export const removeItem = (cartItemId, userId) => async (dispatch) => {
 
         if (response.data.message === 'Item removed from cart') {
             dispatch({ type: REMOVE_ITEM, payload: cartItemId });
-            showToast("Item removed from cart successfully", "success");
+            showToast("Item removed successfully", "success");
         } else {
             showToast("Error removing from cart", "error");
         }
     } catch (error) {
-        console.error('Error removing from cart:', error);
         showToast("Error removing from cart", "error");
     }
 };

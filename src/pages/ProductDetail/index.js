@@ -33,16 +33,20 @@ const ProductDetails = () => {
         }
     }, [product]);
 
-    const addToCartHandler = () => {
+    const addToCartHandler = async () => {
         if (qty <= product.quantity) {
-            dispatch(addToCart(userId, product._id, qty)); 
-            navigate("/cart"); 
-            window.location.reload();
+            try {
+                await dispatch(addToCart(userId, product._id, qty));
+                navigate("/cart");
+                //  window.location.reload();
+            } catch (error) {
+                console.error('Failed to add item to cart:', error);
+            }
         } else {
             alert("No items left");
         }
     };
-
+    
     return (
         <>
             <div className="imgs-detail">

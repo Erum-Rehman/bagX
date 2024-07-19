@@ -21,7 +21,7 @@ const Cart = () => {
             dispatch(fetchCartItems(userId)); 
         }
     }, [dispatch, userId]);
-
+    
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -38,8 +38,7 @@ const Cart = () => {
         if (currentQty < productQty) {
             dispatch(updateCartItemQty(itemId, currentQty + 1, userId));
         } else {
-        // showToast('No more stock available', "error")
-            toast.error('No more stock available');
+        showToast('No more stock available', "error")
         }
     };
 
@@ -53,16 +52,6 @@ const Cart = () => {
 
     const removeItems = (productId) => {
         dispatch(removeItem(productId, userId));
-        console.log({userId})
-        toast.success('Item Removed successfully!', {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
     };
 
     const calculateSubtotal = () => {
