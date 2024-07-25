@@ -7,7 +7,8 @@ import ButnField from './../Button';
 import { fetchCartItems, updateCartItemQty, removeFromCart, removeItem } from '../../store/actions/cartActions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { showToast } from '../../utils/toastUtils';                                         
+import { showToast } from '../../utils/toastUtils';
+import { CART_ITEMS_FETCH_SUCCESS } from '../../store/constant/constant';
 
 const Cart = () => {
     const { cartItems, loading, error } = useSelector(state => state.cart);
@@ -17,11 +18,15 @@ const Cart = () => {
     const userId = userInfo ? userInfo.id : null;
 
     useEffect(() => {
-        if (userId) {
-            dispatch(fetchCartItems(userId)); 
-        }
-    }, [dispatch, userId]);
-    
+        // if (userId) {
+        retrievedData()
+        // dispatch(fetchCartItems(userId)); 
+        // }
+    }, [dispatch,]);
+    const retrievedData = async () => {
+        const cartItem = await localStorage.getItem('cartItem');
+        await dispatch({ type: CART_ITEMS_FETCH_SUCCESS, payload: JSON.parse(cartItem) });
+    }
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -34,31 +39,45 @@ const Cart = () => {
         return <div>No items in the cart</div>;
     }
 
-    const handleIncrement = (itemId, currentQty, productQty) => {
+    const handleIncrement = async (itemId, currentQty, productQty) => {
+        let alreadyHaveInCart = cartItems.findIndex((val) => val._id == itemId)
         if (currentQty < productQty) {
-            dispatch(updateCartItemQty(itemId, currentQty + 1, userId));
+            if (cartItems[alreadyHaveInCart].qty < productQty) {
+                cartItems[alreadyHaveInCart].qty = cartItems[alreadyHaveInCart].qty + 1
+                await localStorage.setItem('cartItem', JSON.stringify(cartItems));
+                await dispatch({ type: CART_ITEMS_FETCH_SUCCESS, payload: cartItems });
+            }
         } else {
-        showToast('No more stock available', "error")
+            showToast('No more stock available', "error")
         }
     };
 
-    const handleDecrement = (itemId, currentQty) => {
+    const handleDecrement = async (itemId, currentQty) => {
+        let alreadyHaveInCart = cartItems.findIndex((val) => val._id == itemId)
         if (currentQty > 1) {
-            dispatch(updateCartItemQty(itemId, currentQty - 1, userId));
+            if (cartItems[alreadyHaveInCart].qty > 1) {
+                cartItems[alreadyHaveInCart].qty = cartItems[alreadyHaveInCart].qty - 1
+                await localStorage.setItem('cartItem', JSON.stringify(cartItems));
+                await dispatch({ type: CART_ITEMS_FETCH_SUCCESS, payload: cartItems });
+            }
         } else {
-            dispatch(removeFromCart(itemId, userId));
+            // dispatch(removeFromCart(itemId, userId));
+            removeItems(itemId)
         }
     };
 
-    const removeItems = (productId) => {
-        dispatch(removeItem(productId, userId));
+    const removeItems = async (productId) => {
+        let alreadyHaveInCart = cartItems.findIndex((val) => val._id == productId)
+        cartItems.splice(alreadyHaveInCart, 1)
+        await localStorage.setItem('cartItem', JSON.stringify(cartItems));
+        await dispatch({ type: CART_ITEMS_FETCH_SUCCESS, payload: cartItems });
     };
 
     const calculateSubtotal = () => {
-        return cartItems.reduce((acc, item) => acc + item?.product?.new_price * item?.qty, 0);
+        return cartItems.reduce((acc, item) => acc + item?.new_price * item?.qty, 0);
     };
 
-    return (
+         return (
         <>
             <ToastContainer />
             <h2 style={{ marginTop: '30px' }}>Cart</h2>
@@ -68,20 +87,20 @@ const Cart = () => {
                     <div className="billing-details">
                         {cartItems.map((item, index) => (
                             <div key={item?._id || index.toString()}>
-                                {item?.product && (
+                                {item && (
                                     <div className="cart-item">
-                                        <img src={item?.product?.image} alt={item?.product?.name} className="cart-image" />
+                                        <img src={item?.image} alt={item?.name} className="cart-image" />
                                         <div className='item-name'>
-                                            <h5 className="product-title">{item?.product?.name}</h5>
+                                            <h5 className="product-title">{item?.name}</h5>
                                             <div className='item-price'>
                                                 <div className='bag-item-count'>
                                                     <IncDec
                                                         count={item?.qty}
-                                                        onClickAdd={() => handleIncrement(item?._id, item?.qty, item?.product?.quantity)}
+                                                        onClickAdd={() => handleIncrement(item?._id, item?.qty, item?.quantity)}
                                                         onClickRemove={() => handleDecrement(item?._id, item?.qty)}
                                                     />
                                                 </div>
-                                                <span className="new-price">Rs, {item?.product?.new_price}</span>
+                                                <span className="new-price">Rs, {item?.new_price}</span>
                                             </div>
                                             <p onClick={() => removeItems(item?._id)} className='remove'>Remove</p>
                                         </div>

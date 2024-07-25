@@ -14,16 +14,16 @@ const SummerSale = () => {
     const location = useLocation();
     const productList = useSelector((state) => state.productList);
     const { products } = productList;
-    console.log({products})
+    console.log({ products })
     // const user = useSelector((state) => state.user);
     // const { userInfo, isAuthenticated } = user;
-    
+
 
     // console.log({userId})
     useEffect(() => {
         dispatch(listProducts());
     }, [dispatch]);
-    
+
     return (
         <>
             {location.pathname === "/summerSale" ? <p className="prd_heading">SUMMER SALE</p>
@@ -50,7 +50,7 @@ const SummerSale = () => {
             <div className="body">
                 <div className="product-container">
                     {products.map((product) => (
-                        <Product key={product._id} product={product} />
+                        product.quantity>0 && <Product key={product._id} product={product} />
                     ))}
                 </div>
             </div>

@@ -31,6 +31,7 @@ export const addToCart = (userId, productId, qty) => async (dispatch) => {
     console.log('userId:', {userId}, {productId} );
     try {
         const { data } = await axios.post(`${baseUrl}/api/cart`, { userId, productId, qty });
+        console.log(data,'data')
         dispatch({ type: CART_ITEM_ADD_SUCCESS, payload: data?.cartItem });
         showToast("Item added to cart successfully", "success");
     } catch (error) {

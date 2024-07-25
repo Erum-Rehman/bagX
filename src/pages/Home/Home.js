@@ -45,7 +45,7 @@ const Home = () => {
             <div className="body">
                 <div className="product_container">
                     {products.map((product) => (
-                        <Product key={product._id} product={product} />
+                        product.quantity>0 && <Product key={product._id} product={product} />
                     ))}
                 </div>
             </div>

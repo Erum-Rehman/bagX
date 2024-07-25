@@ -8,6 +8,7 @@ import { listProductDetails } from '../../store/actions/productAction';
 import { addToCart } from '../../store/actions/cartActions';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CART_ITEMS_FETCH_SUCCESS } from '../../store/constant/constant';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -36,9 +37,23 @@ const ProductDetails = () => {
     const addToCartHandler = async () => {
         if (qty <= product.quantity) {
             try {
-                await dispatch(addToCart(userId, product._id, qty));
+                let value = await localStorage.getItem('cartItem');
+                const cartItems = JSON.parse(JSON.stringify(JSON.parse(value)));
+                if (cartItems) {
+                    let alreadyHaveInCart = cartItems.findIndex((val) => val._id == product._id)
+                    if (alreadyHaveInCart !== -1) {
+                        if (cartItems[alreadyHaveInCart].qty < cartItems[alreadyHaveInCart].quantity) {
+                            cartItems[alreadyHaveInCart].qty = cartItems[alreadyHaveInCart].qty + 1
+                            await localStorage.setItem('cartItem', JSON.stringify(cartItems));
+                        }
+                    } else {
+                        cartItems.push({ ...product, qty })
+                        await localStorage.setItem('cartItem', JSON.stringify(cartItems));
+                    }
+                } else {
+                    await localStorage.setItem('cartItem', JSON.stringify([{ ...product, qty }]));
+                }
                 navigate("/cart");
-                //  window.location.reload();
             } catch (error) {
                 console.error('Failed to add item to cart:', error);
             }
@@ -46,7 +61,7 @@ const ProductDetails = () => {
             alert("No items left");
         }
     };
-    
+
     return (
         <>
             <div className="imgs-detail">
@@ -92,10 +107,10 @@ const ProductDetails = () => {
                             max={product?.quantity}
                             className="quantity-input"
                         /> */}
-                        <ButnField 
-                            title="ADD TO CART" 
-                            onClick={addToCartHandler} 
-                            className="cart_btn" 
+                        <ButnField
+                            title="ADD TO CART"
+                            onClick={addToCartHandler}
+                            className="cart_btn"
                             disabled={!inStock || qty > product?.quantity}
                         />
                     </div>
@@ -113,12 +128,7 @@ const ProductDetails = () => {
                         </li>
                     </ul>
                     <p style={{ fontSize: '15px' }}>DESCRIPTION</p>
-                    <p style={{ fontSize: '14px' }}>Keep your hands free while keeping all your belongings safe and secure in this ultra-roomy
-                        3-piece bag. A must-have design for those who love minimalist style with maximum function,
-                        this bag hits all the right notes. With an elegant wallet with a premium golden chain
-                        attached for convenience and ease of access and to use as a cross-body, this handy carrier
-                        is set to be your new daily staple. Berrybags designed it with dedication so you can pair it with all of your outfits,
-                        from dresses to jeans, to look effortlessly gorgeous.</p>
+                    <p style={{ fontSize: '14px' }}>{product?.description}</p>
                 </div>
             </div>
             <h1 className="product-heading">Reviews</h1>
