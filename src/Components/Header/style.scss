@@ -8,7 +8,7 @@
 .announcement_bar {
   height: 50px;
   width: 100%;
-  background-color: #e22861;
+  background-color: #854a69;
   margin: 0;
   display: flex;
   align-items: center;
@@ -25,6 +25,11 @@ marquee p {
   width: 100%;
   display: inline;
   padding-left: 5%;
+}
+.logo {
+  width: 107px;
+    height: 105px;
+    border-radius: 10px;
 }
 .main_header {
   display: flex;

@@ -62,7 +62,7 @@ const Cart = () => {
         <>
             <ToastContainer />
             <h2 style={{ marginTop: '30px' }}>Cart</h2>
-            <p style={{ fontSize: '11px', color: 'black!important' }}><Link to="/summerSale">Continue shopping</Link></p>
+            <p ><Link className="continue" to="/summerSale">Continue shopping</Link></p>
             <div className="cart-container">
                 <div className="cart-left">
                     <div className="billing-details">

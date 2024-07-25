@@ -42,7 +42,7 @@ const Orders = () => {
                                         </div>
                                     </div>
                                 ))}
-                                <p style={{ textAlign: 'right', fontWeight: '600' }}>SUBTOTAL:    Rs: {order.subtotal}</p>
+                                <p style={{ textAlign: 'right', fontWeight: '600', color: '#854a69' }}>SUBTOTAL:    Rs: {order.subtotal}</p>
                             </p>
                         </div>
                     ))}

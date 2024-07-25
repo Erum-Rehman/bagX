@@ -135,7 +135,7 @@ const Header = ({ product }) => {
           ) : (
             <>
               <div>
-                <img src={require("../../assets/logo_shop.avif")} alt="Logo" className='logo' />
+                <img src={require("../../assets/weblogo.jpeg")} alt="Logo" className='logo' />
               </div>
               {width >= 767 ?
                 <ul className="nav-items">

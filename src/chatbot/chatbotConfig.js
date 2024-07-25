@@ -6,10 +6,10 @@ const config = {
   botName: "Assistant",
   customStyles: {
     botMessageBox: {
-      backgroundColor: "#376B7E",
+      backgroundColor: "black",
     },
     chatButton: {
-      backgroundColor: "#5ccc9d",
+      backgroundColor: "#854a69",
     },
   },
 };

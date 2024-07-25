@@ -60,7 +60,7 @@ const Login = () => {
                             </button>
                             <ErrorMessage name="password" component="div" className="error" />
                         </div>
-                        <span style={{ textAlign: 'end', color: '#f96822' }}>Forgot Password?</span>
+                        <span style={{ textAlign: 'end', color: '#854a69' }}>Forgot Password?</span>
 
                         <div className="checkbox-div">
                             <Field type="checkbox" name="rememberMe" style={{ marginRight: '15px' }} />
