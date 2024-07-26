@@ -54,9 +54,9 @@ const SummerSale = () => {
                     ))}
                 </div>
             </div>
-            <Stack spacing={2} className="pagination-body">
+            {/* <Stack spacing={2} className="pagination-body">
                 <Pagination count={4} shape="rounded" />
-            </Stack>
+            </Stack> */}
         </>
     )
 }
