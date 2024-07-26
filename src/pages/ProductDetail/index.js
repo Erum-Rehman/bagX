@@ -66,7 +66,7 @@ const ProductDetails = () => {
         <>
             <div className="imgs-detail">
                 <div className="product-bar">
-                    <div className="side-imgs">
+                    {/* <div className="side-imgs">
                         <button>
                             <img src={require("../../assets/whole_sale.png")} alt="product" />
                         </button>
@@ -76,7 +76,7 @@ const ProductDetails = () => {
                         <button>
                             <img src={require("../../assets/whole_sale.png")} alt="product" />
                         </button>
-                    </div>
+                    </div> */}
                     <div className="product-imgs">
                         <img src={product?.image} alt={product?.name} />
                     </div>

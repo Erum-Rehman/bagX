@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SelectLabels from '../../Components/Dropdown';
-import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useLocation } from "react-router-dom";
 import { listProducts } from '../../store/actions/productAction';
 import Product from '../../Components/Product';
 import { useDispatch, useSelector } from 'react-redux';
+import Pagination from '../../Components/Pagination';
 
 const SummerSale = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const productList = useSelector((state) => state.productList);
-    const { products } = productList;
+    const { products, totalProducts } = productList;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productsPerPage] = useState(10);
     console.log({ products })
     // const user = useSelector((state) => state.user);
     // const { userInfo, isAuthenticated } = user;
@@ -23,6 +25,13 @@ const SummerSale = () => {
     useEffect(() => {
         dispatch(listProducts());
     }, [dispatch]);
+
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <>
@@ -41,22 +50,24 @@ const SummerSale = () => {
             }
             <div className="dropdown-container">
                 <div className="p-left">
-                    <p>345 products</p>
+                    <p>{totalProducts} products</p>
                 </div>
                 <div className="drop-right">
-                    <SelectLabels />
+                    {/* <SelectLabels /> */}
                 </div>
             </div>
             <div className="body">
                 <div className="product-container">
-                    {products.map((product) => (
-                        product.quantity>0 && <Product key={product._id} product={product} />
+                    {currentProducts.map((product) => (
+                        product.quantity > 0 && <Product key={product._id} product={product} />
                     ))}
                 </div>
             </div>
-            {/* <Stack spacing={2} className="pagination-body">
-                <Pagination count={4} shape="rounded" />
-            </Stack> */}
+            <Pagination
+                productsPerPage={productsPerPage}
+                totalProducts={products.length}
+                paginate={paginate}
+            />
         </>
     )
 }

@@ -8,12 +8,23 @@ import {
   PRODUCT_SEARCH
 } from '../constant/constant';
 
-export const productListReducer = (state = { products: [] }, action) => {
+const initialState = {
+  products: [],
+  totalProducts: 0,
+  loading: false,
+  error: null
+};
+
+export const productListReducer = (state = initialState, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
-      return { loading: true, products: [] };
+      return { ...state, loading: true, products: [] };
     case PRODUCT_LIST_SUCCESS:
-      return { loading: false, products: action.payload };
+      return {
+        loading: false,
+        products: action.payload.products,
+        totalProducts: action.payload.totalProducts
+      };
     case PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };
     case PRODUCT_SEARCH:
