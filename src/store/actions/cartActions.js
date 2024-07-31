@@ -12,7 +12,7 @@ import {
 } from '../constant/constant'; 
 import { showToast } from '../../utils/toastUtils';
 
-const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 // Fetch Cart Items
 export const fetchCartItems = () => async (dispatch) => {

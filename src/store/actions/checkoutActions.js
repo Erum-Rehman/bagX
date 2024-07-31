@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SAVE_SHIPPING_ADDRESS, PLACE_ORDER, GET_USER_ORDERS_SUCCESS, GET_USER_ORDERS_FAILURE } from '../constant/constant';
 import { showToast } from '../../utils/toastUtils';
 
-const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const saveShippingAddress = (data) => (dispatch) => {
   dispatch({
