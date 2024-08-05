@@ -84,7 +84,7 @@ const Cart = () => {
             <p ><Link className="continue" to="/summerSale">Continue shopping</Link></p>
             <div className="cart-container">
                 <div className="cart-left">
-                    <div className="billing-details">
+                    <div className="cart_billing-details">
                         {cartItems.map((item, index) => (
                             <div key={item?._id || index.toString()}>
                                 {item && (

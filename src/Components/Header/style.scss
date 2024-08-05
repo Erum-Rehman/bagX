@@ -30,6 +30,10 @@ marquee p {
   width: 107px;
     height: 105px;
     border-radius: 10px;
+    @include respond-to(mobile-small) {
+      width: 57px;
+    height: 50px;
+   }
 }
 .main_header {
   display: flex;
