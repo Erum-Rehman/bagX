@@ -64,7 +64,7 @@ const Registration = () => {
             >
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                     <Form className="login-container" onSubmit={handleSubmit}>
-                        <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Register Your Account</h2>
+                        <h2 className="reg_heading">Register Your Account</h2>
 
                         <div className="contact-cell">
                             <label>First Name *</label><br />
@@ -172,7 +172,7 @@ const Registration = () => {
 
                         <div className="contact-cell">
                             <input type="checkbox" style={{ marginRight: '15px' }} />
-                            <label style={{ color: "#505050", fontSize: '17px', fontWeight: '500' }}>
+                            <label className="label">
                                 I agree to the Terms &amp; Policy
                             </label>
                         </div>

@@ -122,6 +122,9 @@ marquee p {
   gap: 20px;
   justify-content: flex-start;
   margin: 0 36px;
+  @include respond-to(mobile-small) {
+    justify-content: center;
+  }
 }
 
 .product-item {
@@ -134,6 +137,7 @@ marquee p {
   width: 100%;
   height: auto;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .product-details {

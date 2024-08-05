@@ -135,7 +135,9 @@ const Header = ({ product }) => {
           ) : (
             <>
               <div>
+              <Link to="/">
                 <img src={require("../../assets/weblogo.jpeg")} alt="Logo" className='logo' />
+                </Link>
               </div>
               {width >= 767 ?
                 <ul className="nav-items">
@@ -185,7 +187,7 @@ const Header = ({ product }) => {
               <h2>{item.name}</h2>
               <span className="price"><s>Rs.{item.old_price}</s></span>
               &ensp;<span className="price">Rs.{item.new_price}</span>
-              <p>{item.description}</p>
+              {/* <p>{item.description}</p> */}
             </div>
           </div>
         ))}

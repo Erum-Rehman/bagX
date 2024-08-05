@@ -36,7 +36,7 @@ const Login = () => {
             >
                 {({ values, handleChange, handleSubmit }) => (
                     <Form className="login-container" onSubmit={handleSubmit}>
-                        <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Login Your Account</h2>
+                        <h2 className="reg_heading" >Login Your Account</h2>
                         <div className="contact-cell">
                             <label>Email</label><br />
                             <Field
